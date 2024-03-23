@@ -1,0 +1,79 @@
+[gd_scene load_steps=5 format=3 uid="uid://wwilrsmlo10s"]
+
+[ext_resource type="Script" path="res://Scripts/level_1.gd" id="1_u6vtk"]
+[ext_resource type="Texture2D" uid="uid://cblgkkut4i6j8" path="res://Images/image2.jpeg" id="2_xiu34"]
+[ext_resource type="AudioStream" uid="uid://dpbjm0etft01i" path="res://Audio/sunsetreverie.ogg" id="3_yernx"]
+
+[sub_resource type="FontFile" id="FontFile_60ak7"]
+cache/0/16/0/ascent = 0.0
+cache/0/16/0/descent = 0.0
+cache/0/16/0/underline_position = 0.0
+cache/0/16/0/underline_thickness = 0.0
+cache/0/16/0/scale = 1.0
+cache/0/16/0/kerning_overrides/16/0 = Vector2(0, 0)
+cache/0/16/0/kerning_overrides/60/0 = Vector2(0, 0)
+cache/0/16/0/kerning_overrides/80/0 = Vector2(0, 0)
+cache/0/16/0/kerning_overrides/100/0 = Vector2(0, 0)
+cache/0/60/0/ascent = 0.0
+cache/0/60/0/descent = 0.0
+cache/0/60/0/underline_position = 0.0
+cache/0/60/0/underline_thickness = 0.0
+cache/0/60/0/scale = 1.0
+cache/0/60/0/kerning_overrides/16/0 = Vector2(0, 0)
+cache/0/60/0/kerning_overrides/60/0 = Vector2(0, 0)
+cache/0/60/0/kerning_overrides/80/0 = Vector2(0, 0)
+cache/0/60/0/kerning_overrides/100/0 = Vector2(0, 0)
+cache/0/80/0/ascent = 0.0
+cache/0/80/0/descent = 0.0
+cache/0/80/0/underline_position = 0.0
+cache/0/80/0/underline_thickness = 0.0
+cache/0/80/0/scale = 1.0
+cache/0/80/0/kerning_overrides/16/0 = Vector2(0, 0)
+cache/0/80/0/kerning_overrides/60/0 = Vector2(0, 0)
+cache/0/80/0/kerning_overrides/80/0 = Vector2(0, 0)
+cache/0/80/0/kerning_overrides/100/0 = Vector2(0, 0)
+cache/0/100/0/ascent = 0.0
+cache/0/100/0/descent = 0.0
+cache/0/100/0/underline_position = 0.0
+cache/0/100/0/underline_thickness = 0.0
+cache/0/100/0/scale = 1.0
+cache/0/100/0/kerning_overrides/16/0 = Vector2(0, 0)
+cache/0/100/0/kerning_overrides/60/0 = Vector2(0, 0)
+cache/0/100/0/kerning_overrides/80/0 = Vector2(0, 0)
+cache/0/100/0/kerning_overrides/100/0 = Vector2(0, 0)
+
+[node name="Level1" type="Node2D"]
+script = ExtResource("1_u6vtk")
+
+[node name="Background" type="Sprite2D" parent="."]
+light_mask = 0
+position = Vector2(1316.5, 781)
+scale = Vector2(2.25607, 1.97963)
+texture = ExtResource("2_xiu34")
+
+[node name="Title Text" type="RichTextLabel" parent="."]
+offset_left = 939.0
+offset_top = 237.0
+offset_right = 1760.0
+offset_bottom = 404.0
+theme_override_fonts/normal_font = SubResource("FontFile_60ak7")
+theme_override_font_sizes/normal_font_size = 100
+text = "
+Project Dungeon"
+
+[node name="Start Button" type="Button" parent="."]
+light_mask = 16
+visibility_layer = 16
+offset_left = 1183.0
+offset_top = 776.0
+offset_right = 1515.0
+offset_bottom = 938.0
+mouse_default_cursor_shape = 2
+theme_override_font_sizes/font_size = 43
+text = "Start Game"
+
+[node name="Background Music" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_yernx")
+autoplay = true
+
+[connection signal="pressed" from="Start Button" to="." method="_on_start_button_pressed"]
