@@ -1,0 +1,21 @@
+[gd_scene load_steps=5 format=3 uid="uid://b0eau6aj6s7r5"]
+
+[ext_resource type="Script" path="res://Dungeon.gd" id="1_2ob3a"]
+[ext_resource type="Script" path="res://Adventurer.gd" id="2_vitel"]
+[ext_resource type="Script" path="res://Corridors.gd" id="3_0fln3"]
+[ext_resource type="Script" path="res://Zones.gd" id="3_pmnmr"]
+
+[node name="Dungeon" type="Node2D"]
+script = ExtResource("1_2ob3a")
+
+[node name="Corridors" type="Node" parent="."]
+script = ExtResource("3_0fln3")
+
+[node name="Zones" type="Node" parent="."]
+script = ExtResource("3_pmnmr")
+
+[node name="Adventurer" type="Node2D" parent="."]
+script = ExtResource("2_vitel")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(0.1, 0.1)
