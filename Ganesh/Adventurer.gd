@@ -1,7 +1,7 @@
 class_name Adventurer
 extends Node2D
 
-var destination:DungeonZone
+var destination:Zone
 
 func _draw():
 	draw_circle(Vector2.ZERO,30,Color.RED)
@@ -13,14 +13,14 @@ func _process(delta):
 		else:
 			wander()
 	else:
-		destination=$'../Zones'.entrance
+		destination=$'../Zones'.get_child(0)
 func wander():
 	var potential_destinations=[]
 	for i in $'../Corridors'.get_children():
 		if i.zone_a==destination:
 			potential_destinations.append(i.zone_b)
 	if potential_destinations.size()<1:
-		destination=$'../Zones'.entrance
+		destination=$'../Zones'.get_child(0)
 		position=destination.position
 	else:
 		var new_destination=potential_destinations[randi()%potential_destinations.size()]
