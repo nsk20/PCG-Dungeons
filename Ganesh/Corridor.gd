@@ -19,7 +19,7 @@ func _ready():
 	zone_b.add_pred(zone_a)
 func attract_zones():
 	var distance=zone_b.position-zone_a.position
-	var adjustment=distance.normalized()*(distance.length()-length)*.005
+	var adjustment=distance.normalized()*(distance.length()-length)*.01
 	zone_a.velocity+=adjustment
 	zone_b.velocity+=-adjustment
 func update_line():

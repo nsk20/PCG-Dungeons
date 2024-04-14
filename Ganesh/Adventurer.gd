@@ -7,12 +7,10 @@ var prev_destination:Zone
 
 func _draw():
 	draw_circle(Vector2.ZERO,30,Color.RED)
-func set_destination(destinationx:Zone):
-	destination=destinationx
 func _process(delta):
 	if destination:
 		var pos_diff=destination.position-position
-		if pos_diff.length()>.1:
+		if pos_diff.length()>1:
 			position+=pos_diff.normalized()
 		else:
 			destination.clear_attempt()

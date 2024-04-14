@@ -9,9 +9,6 @@
 [node name="Dungeon" type="Node2D"]
 script = ExtResource("1_ay6hg")
 
-[node name="Adventurer" type="Node2D" parent="."]
-script = ExtResource("2_a18ye")
-
 [node name="TopoMap" type="Node2D" parent="."]
 script = ExtResource("3_l4kt6")
 
@@ -20,6 +17,9 @@ script = ExtResource("3_lgc7o")
 
 [node name="Zones" type="Node2D" parent="TopoMap"]
 script = ExtResource("2_v8cx1")
+
+[node name="Adventurer" type="Node2D" parent="."]
+script = ExtResource("2_a18ye")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(0.3, 0.3)

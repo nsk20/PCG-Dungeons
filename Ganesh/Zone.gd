@@ -6,6 +6,7 @@ signal updated_depth
 var cleared:bool=false
 var depth:int=0
 var fixed=false
+var key_zone:Zone=null
 var predecessors:Array[Zone]=[]
 var radius:int=50
 var space_buffer:int=radius*3
@@ -14,6 +15,8 @@ var velocity:Vector2
 var zone_id:String
 
 func _draw():
+	if key_zone:
+		draw_line(position,key_zone.position,Color.GRAY)
 	if cleared:
 		draw_circle(Vector2.ZERO,radius*1.5,Color.WHITE/(depth+1))
 	draw_circle(Vector2.ZERO,radius,Color.BLACK/(depth+1))
@@ -46,7 +49,7 @@ func add_succ(other_zone:Zone):
 	if not other_zone in successors:
 		successors.append(other_zone)
 func clear_attempt():
-	if randf()<1.0/min(1,depth):
+	if (not key_zone or key_zone.cleared) and randf()<.9:
 		cleared=true
 func delete_pred(other_zone:Zone):
 	if other_zone in predecessors:
@@ -67,4 +70,4 @@ func repel_zone(other_zone:Zone):
 		velocity+=Vector2(randi()%3-1,0)
 	if position.y==other_zone.position.y:
 		velocity+=Vector2(0,randi()%3-1)
-	velocity+=-position.direction_to(other_zone.position).normalized()*.005
+	velocity+=-position.direction_to(other_zone.position).normalized()
