@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://b0eau6aj6s7r5"]
+
+[ext_resource type="Script" path="res://DungeonZone.gd" id="2_be33t"]
+[ext_resource type="Script" path="res://DungeonCorridor.gd" id="3_8mlau"]
+
+[node name="Dungeon" type="Node2D"]
+
+[node name="DungeonZone" type="Node2D" parent="."]
+script = ExtResource("2_be33t")
+
+[node name="DungeonCorridor" type="Line2D" parent="."]
+script = ExtResource("3_8mlau")
+
+[node name="Corridors" type="Node" parent="."]
+
+[node name="Zones" type="Node" parent="."]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(0.1, 0.1)
