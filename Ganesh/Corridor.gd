@@ -4,14 +4,14 @@ extends Line2D
 var zone_a:Zone
 var zone_b:Zone
 
-var length:int=500
+var length:int=100
 
 func _init(zone_ax:Zone,zone_bx:Zone):
 	zone_a=zone_ax
 	zone_b=zone_bx
 	gradient=Gradient.new()
 func _process(delta):
-	attract_zones()
+	#attract_zones()
 	update_line()
 	queue_redraw()
 func _ready():

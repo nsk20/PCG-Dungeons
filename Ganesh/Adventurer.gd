@@ -6,7 +6,7 @@ var map:TopoMap
 var prev_destination:Zone
 
 func _draw():
-	draw_circle(Vector2.ZERO,30,Color.RED)
+	draw_circle(Vector2.ZERO,5,Color.RED)
 func _process(delta):
 	if destination:
 		var pos_diff=destination.position-position
