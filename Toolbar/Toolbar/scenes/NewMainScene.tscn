@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://b0gbp1n6bkuwv"]
+
+[ext_resource type="PackedScene" uid="uid://c3t762umcvydp" path="res://scenes/MainScene.tscn" id="1_ew3ch"]
+[ext_resource type="PackedScene" uid="uid://5ox6g2e5lsqk" path="res://scenes/Dungeon.tscn" id="2_mpeap"]
+
+[node name="NewMainScene" type="Node2D"]
+
+[node name="Dungeon" parent="." instance=ExtResource("2_mpeap")]
+
+[node name="MainScene" parent="." instance=ExtResource("1_ew3ch")]
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 0.0
+offset_top = -25.0
+offset_right = 0.0
+offset_bottom = -25.0

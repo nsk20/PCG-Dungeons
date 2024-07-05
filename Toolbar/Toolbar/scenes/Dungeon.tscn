@@ -1,0 +1,28 @@
+[gd_scene load_steps=7 format=3 uid="uid://5ox6g2e5lsqk"]
+
+[ext_resource type="Script" path="res://scripts/Dungeon.gd" id="1_wuvlq"]
+[ext_resource type="Script" path="res://scripts/TopoMap.gd" id="2_k40fc"]
+[ext_resource type="Script" path="res://scripts/Corridors.gd" id="3_wv63d"]
+[ext_resource type="Script" path="res://scripts/Zones.gd" id="4_6jfan"]
+[ext_resource type="Script" path="res://scripts/Adventurer.gd" id="5_5al5j"]
+[ext_resource type="Script" path="res://scripts/Mouseover.gd" id="6_8iuxf"]
+
+[node name="Dungeon" type="Node2D"]
+script = ExtResource("1_wuvlq")
+
+[node name="TopoMap" type="Node2D" parent="."]
+script = ExtResource("2_k40fc")
+
+[node name="Corridors" type="Node2D" parent="TopoMap"]
+script = ExtResource("3_wv63d")
+
+[node name="Zones" type="Node2D" parent="TopoMap"]
+script = ExtResource("4_6jfan")
+
+[node name="Adventurer" type="Node2D" parent="."]
+script = ExtResource("5_5al5j")
+
+[node name="Mouseover" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 23.0
+script = ExtResource("6_8iuxf")
