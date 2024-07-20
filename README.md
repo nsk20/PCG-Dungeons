@@ -3,5 +3,3 @@ This project aims to develop a system for generating dungeons programmatically w
 
 
 
-# **Requirement**
-Godot Engine v4.2.1
