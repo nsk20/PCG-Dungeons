@@ -3,6 +3,7 @@ extends Label
 
 func _input(event):
 	if event is InputEventMouseButton and event.button_index==MOUSE_BUTTON_LEFT:
+		text=''
 		for zone in get_node('../TopoMap/Zones').get_children():
 			if (event.position-zone.global_position).length()<zone.radius:
 				zone.selected=true
@@ -14,7 +15,7 @@ func _input(event):
 				text+='\t'
 				for i in zone.predecessors:
 					text+=i.zone_id+' '
-				text+='\n Successors:\n'
+				text+='\nSuccessors:\n'
 				text+='\t'
 				for i in zone.successors:
 					text+=i.zone_id+' '
