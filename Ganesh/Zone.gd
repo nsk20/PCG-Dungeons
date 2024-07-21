@@ -7,6 +7,7 @@ var cleared:bool=false
 var depth:int=0
 var dragging:bool=false
 var fixed=false
+var floorplan:RoomGrid=RoomGrid.new()
 var selected=false
 var key_zone:Zone=null
 var predecessors:Array[Zone]=[]
@@ -19,7 +20,7 @@ var zone_id:String
 func _draw():
 	if selected:
 		draw_circle(Vector2.ZERO,radius*1.7,Color.WHITE)
-	if key_zone and not key_zone.cleared:
+	if key_zone:
 		draw_line(Vector2.ZERO,key_zone.position-position,Color.GRAY)
 		draw_circle(key_zone.position-position+Vector2(10,10),radius*.5,Color.GOLD)
 	if cleared:
@@ -34,6 +35,10 @@ func _input(event):
 				dragging=true
 		if dragging and not event.pressed:
 			dragging=false
+	if event is InputEventMouseButton and event.button_index==MOUSE_BUTTON_RIGHT and event.is_pressed():
+		if (event.position-global_position).length()<radius:
+			floorplan.expanded=not floorplan.expanded
+			floorplan.queue_redraw()
 	if event is InputEventMouseMotion and dragging:
 		position+=event.position-global_position
 func _process(delta):
@@ -41,7 +46,7 @@ func _process(delta):
 		fixed=true
 		if abs(position.x)>get_window().size.x*4/10 or abs(position.y)>get_window().size.y*4/10:
 			position+=position.direction_to(Vector2.ZERO).normalized()
-	if position.distance_to(Vector2.ZERO)>min(get_window().size.x/2,get_window().size.y/2):
+	if abs(position.x)>get_window().size.x*4/10 or abs(position.y)>get_window().size.y*4/10:
 		velocity+=position.direction_to(Vector2.ZERO).normalized()
 	update_position()
 	queue_redraw()
@@ -58,6 +63,7 @@ func _on_zone_updated_depth():
 		updated_depth.emit()
 func _ready():
 	_on_zone_updated_depth()
+	add_child(floorplan)
 func add_pred(other_zone:Zone):
 	if not other_zone in predecessors:
 		predecessors.append(other_zone)
