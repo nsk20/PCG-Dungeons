@@ -1,0 +1,25 @@
+ea4bc82a6ad023ab7ee23ee620429895
+::res://::1721536743
+icon.svg::CompressedTexture2D::1016085614066297619::1721272781::1721272781::1::::<><>::
+world_environment.tscn::PackedScene::2651479681091677889::1721272781::0::1::::<><>::
+::res://dungeon generation/::1721529869
+DungeonTiles.tres::MeshLibrary::7529157247186115468::1721529850::0::1::::<><>::
+DunMesh.gd::GDScript::-1::1721272781::0::1::::<>Node3D<>::
+dun_gen.gd::GDScript::-1::1721272782::0::1::::<>Node3D<>::
+dun_gen.tscn::PackedScene::5106335334656035990::1721529869::0::1::::<><>::uid://dfjgecsdgj6ls::::res://dungeon generation/DungeonTiles.tres<>res://dungeon generation/dun_gen.gd<>uid://bc1uku3eiv648::::res://dungeon generation/dun_mesh.tscn<>uid://cbed6efcl7lu7::::res://imports/DunCell.tscn<>res://imports/DunCell.gd
+dun_mesh.tscn::PackedScene::2581705484283919391::1721529869::0::1::::<><>::res://dungeon generation/DunMesh.gd
+node_3d.tscn::PackedScene::3093165935756533769::1721272782::0::1::::<><>::
+::res://imports/::1721529870
+ceiling.tres::StandardMaterial3D::8155503231468143737::1721272787::0::1::::<><>::uid://cvewhq4x36jhm::::res://imports/DunCell_TexturesCom_Pavement_CobblestoneStreet5_2x2_1K_albedo.png<>uid://cmnikjkgv3d16::::res://imports/DunCell_TexturesCom_Pavement_CobblestoneStreet5_2x2_1K_normals.png
+DunCell.gd::GDScript::-1::1721272787::0::1::::<>Node3D<>::
+DunCell.glb::PackedScene::7937418948370697085::1721272787::1721272787::1::::<><>::
+DunCell.tscn::PackedScene::4851525450554089124::1721529870::0::1::::<><>::res://imports/DunCell.gd<>uid://dgw3ja14i3vne::::res://imports/floor.tres<>uid://cmx524f0yfom0::::res://imports/walls.tres<>uid://dogt7gmvynypt::::res://imports/ceiling.tres
+DunCell_TexturesCom_Cement_1x1_512_albedo.png::CompressedTexture2D::1103300668653326704::1721272787::1721272787::1::::<><>::
+DunCell_TexturesCom_Cement_1x1_512_normals.png::CompressedTexture2D::7875495841972991884::1721272787::1721272787::1::::<><>::
+DunCell_TexturesCom_MixedMedievalBricks_1K_albedo.png::CompressedTexture2D::532777157866056340::1721272787::1721272787::1::::<><>::
+DunCell_TexturesCom_MixedMedievalBricks_1K_normals.png::CompressedTexture2D::1096311667565323252::1721272788::1721272787::1::::<><>::
+DunCell_TexturesCom_Pavement_CobblestoneStreet5_2x2_1K_albedo.png::CompressedTexture2D::6256413755455909366::1721272787::1721272787::1::::<><>::
+DunCell_TexturesCom_Pavement_CobblestoneStreet5_2x2_1K_normals.png::CompressedTexture2D::5642448484186524431::1721272787::1721272787::1::::<><>::
+dun_cell.tscn::PackedScene::2686959895746768544::1721272787::0::1::::<><>::uid://dlc7eo0th32e0::::res://imports/DunCell.glb
+floor.tres::StandardMaterial3D::7627527612933775634::1721272787::0::1::::<><>::uid://pypg3e77tne3::::res://imports/DunCell_TexturesCom_Cement_1x1_512_albedo.png<>uid://dkg7jbmwlbl8g::::res://imports/DunCell_TexturesCom_Cement_1x1_512_normals.png
+walls.tres::StandardMaterial3D::5664459437673738737::1721272787::0::1::::<><>::uid://huc052xwvnuq::::res://imports/DunCell_TexturesCom_MixedMedievalBricks_1K_albedo.png<>uid://pvcdfq7dtuvs::::res://imports/DunCell_TexturesCom_MixedMedievalBricks_1K_normals.png
