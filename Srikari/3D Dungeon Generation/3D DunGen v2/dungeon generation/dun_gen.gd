@@ -110,7 +110,6 @@ func generate():
 		del_graph.connect_points(p1, p3)
 
 	var visited_points : PackedInt32Array = []
-	#visited_points.append(randi() % room_positions.size())
 	if room_positions.size() > 0:
 		visited_points.append(randi() % room_positions.size())
 	else:
@@ -144,6 +143,11 @@ func generate():
 					hallway_graph.connect_points(p, c)
 
 	create_hallways(hallway_graph)
+
+	# Call the function from dun_mesh.gd to create the mesh layer
+	if has_node("DunMesh"):  # Replace with your actual node path
+		var mesh_node : Node3D = get_node("DunMesh")  # Replace with your actual node path
+		mesh_node.call("create_dungeon")
 
 func create_hallways(hallway_graph : AStar2D):
 	var hallways : Array[PackedVector3Array] = []
@@ -193,26 +197,47 @@ func make_room(rec : int):
 
 	var width : int = (randi() % (max_room_size - min_room_size)) + min_room_size
 	var height : int = (randi() % (max_room_size - min_room_size)) + min_room_size
-
-	var start_pos : Vector3i
-	start_pos.x = randi() % (border_size - width + 1)
-	start_pos.z = randi() % (border_size - height + 1)
-
-	for r in range(-room_margin, height + room_margin):
-		for c in range(-room_margin, width + room_margin):
-			var pos : Vector3i = start_pos + Vector3i(c, 0, r)
-			if grid_map.get_cell_item(pos) == 0:
-				make_room(rec - 1)
-				return
+	var x : int = (randi() % (border_size - width)) + 1
+	var z : int = (randi() % (border_size - height)) + 1
 
 	var room : PackedVector3Array = []
-	for r in range(height):
-		for c in range(width):
-			var pos : Vector3i = start_pos + Vector3i(c, 0, r)
-			grid_map.set_cell_item(pos, 0)
-			room.append(pos)
-	room_tiles.append(room)
-	var avg_x : float = start_pos.x + (float(width) / 2)
-	var avg_z : float = start_pos.z + (float(height) / 2)
-	var pos : Vector3 = Vector3(avg_x, 0, avg_z)
-	room_positions.append(pos)
+	for i in range(width):
+		for j in range(height):
+			room.append(Vector3(x + i, 0, z + j))
+
+	if not intersecting(room):
+		room_tiles.append(room)
+		room_positions.append(Vector3(x + width / 2, 0, z + height / 2))
+		for t in room:
+			grid_map.set_cell_item(t, 0)
+		if randi() % 2 == 0:
+			make_room(rec - 1)
+			make_room(rec - 1)
+
+func intersecting(room : PackedVector3Array) -> bool:
+	var room_min : Vector3 = room[0]
+	var room_max : Vector3 = room[0]
+
+	# Calculate the bounding box of the new room
+	for t in room:
+		room_min = Vector3(min(room_min.x, t.x), min(room_min.y, t.y), min(room_min.z, t.z))
+		room_max = Vector3(max(room_max.x, t.x), max(room_max.y, t.y), max(room_max.z, t.z))
+
+	# Check against existing rooms
+	for r in room_tiles:
+		var existing_min : Vector3 = r[0]
+		var existing_max : Vector3 = r[0]
+
+		# Calculate the bounding box of the existing room
+		for t in r:
+			existing_min = Vector3(min(existing_min.x, t.x), min(existing_min.y, t.y), min(existing_min.z, t.z))
+			existing_max = Vector3(max(existing_max.x, t.x), max(existing_max.y, t.y), max(existing_max.z, t.z))
+
+		# Check if the bounding boxes intersect
+		if (room_min.x <= existing_max.x and room_max.x >= existing_min.x and
+			room_min.y <= existing_max.y and room_max.y >= existing_min.y and
+			room_min.z <= existing_max.z and room_max.z >= existing_min.z):
+			return true
+
+	return false
+
