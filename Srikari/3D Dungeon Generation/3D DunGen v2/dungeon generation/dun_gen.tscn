@@ -1,0 +1,798 @@
+[gd_scene load_steps=10 format=3 uid="uid://ce0sukbhqo1ew"]
+
+[ext_resource type="MeshLibrary" uid="uid://dfjgecsdgj6ls" path="res://dungeon generation/DungeonTiles.tres" id="1_7r5ek"]
+[ext_resource type="Script" path="res://dungeon generation/dun_gen.gd" id="1_o0clw"]
+[ext_resource type="PackedScene" uid="uid://bc1uku3eiv648" path="res://dungeon generation/dun_mesh.tscn" id="3_of2g0"]
+[ext_resource type="PackedScene" uid="uid://cbed6efcl7lu7" path="res://imports/DunCell.tscn" id="4_pki75"]
+
+[sub_resource type="Gradient" id="Gradient_hy7ul"]
+offsets = PackedFloat32Array(0, 0.192661, 0.981651)
+colors = PackedColorArray(0, 0, 0, 1, 0.242991, 0.187105, 0.163146, 1, 1, 0.77001, 0.67141, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_mkicw"]
+gradient = SubResource("Gradient_hy7ul")
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_pv2xn"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_o7xae"]
+sky_material = SubResource("ProceduralSkyMaterial_pv2xn")
+
+[sub_resource type="Environment" id="Environment_6iixa"]
+background_mode = 1
+background_color = Color(0.623529, 0.521569, 0.407843, 1)
+background_energy_multiplier = 0.9
+sky = SubResource("Sky_o7xae")
+tonemap_mode = 2
+ssr_enabled = true
+ssr_fade_in = 0.270375
+ssao_enabled = true
+ssao_radius = 0.73
+ssil_enabled = true
+sdfgi_cascades = 8
+sdfgi_max_distance = 3276.8
+fog_enabled = true
+fog_light_energy = 0.63
+fog_density = 0.0036
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.0271
+volumetric_fog_albedo = Color(1, 0.898039, 0.678431, 1)
+adjustment_enabled = true
+adjustment_brightness = 1.23
+adjustment_contrast = 1.1
+adjustment_saturation = 0.71
+adjustment_color_correction = SubResource("GradientTexture1D_mkicw")
+
+[node name="DunGen" type="Node3D"]
+script = ExtResource("1_o0clw")
+survival_chance = 0.0
+border_size = 45
+room_number = 5
+min_room_size = 5
+max_room_size = 8
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_6iixa")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.899431, 0.299218, 0.318578, -0.381482, 0.181734, 0.906336, 0.213296, -0.936718, 0.277604, 0, 0, 0)
+light_color = Color(1, 0.878431, 0.752941, 1)
+light_energy = 0.29
+
+[node name="GridMap" type="GridMap" parent="."]
+mesh_library = ExtResource("1_7r5ek")
+cell_size = Vector3(1, 1, 1)
+cell_center_y = false
+data = {
+"cells": PackedInt32Array(65535, 65535, 3, 65535, 45, 3, 45, 65535, 3, 0, 65535, 3, 0, 45, 3, 45, 0, 3, 65535, 0, 3, 1, 65535, 3, 1, 45, 3, 45, 1, 3, 65535, 1, 3, 2, 65535, 3, 2, 45, 3, 45, 2, 3, 65535, 2, 3, 3, 65535, 3, 3, 45, 3, 45, 3, 3, 65535, 3, 3, 4, 65535, 3, 4, 45, 3, 45, 4, 3, 65535, 4, 3, 5, 65535, 3, 5, 45, 3, 45, 5, 3, 65535, 5, 3, 6, 65535, 3, 6, 45, 3, 45, 6, 3, 65535, 6, 3, 7, 65535, 3, 7, 45, 3, 45, 7, 3, 65535, 7, 3, 8, 65535, 3, 8, 45, 3, 45, 8, 3, 65535, 8, 3, 9, 65535, 3, 9, 45, 3, 45, 9, 3, 65535, 9, 3, 10, 65535, 3, 10, 45, 3, 45, 10, 3, 65535, 10, 3, 11, 65535, 3, 11, 45, 3, 45, 11, 3, 65535, 11, 3, 12, 65535, 3, 12, 45, 3, 45, 12, 3, 65535, 12, 3, 13, 65535, 3, 13, 45, 3, 45, 13, 3, 65535, 13, 3, 14, 65535, 3, 14, 45, 3, 45, 14, 3, 65535, 14, 3, 15, 65535, 3, 15, 45, 3, 45, 15, 3, 65535, 15, 3, 16, 65535, 3, 16, 45, 3, 45, 16, 3, 65535, 16, 3, 17, 65535, 3, 17, 45, 3, 45, 17, 3, 65535, 17, 3, 18, 65535, 3, 18, 45, 3, 45, 18, 3, 65535, 18, 3, 19, 65535, 3, 19, 45, 3, 45, 19, 3, 65535, 19, 3, 20, 65535, 3, 20, 45, 3, 45, 20, 3, 65535, 20, 3, 21, 65535, 3, 21, 45, 3, 45, 21, 3, 65535, 21, 3, 22, 65535, 3, 22, 45, 3, 45, 22, 3, 65535, 22, 3, 23, 65535, 3, 23, 45, 3, 45, 23, 3, 65535, 23, 3, 24, 65535, 3, 24, 45, 3, 45, 24, 3, 65535, 24, 3, 25, 65535, 3, 25, 45, 3, 45, 25, 3, 65535, 25, 3, 26, 65535, 3, 26, 45, 3, 45, 26, 3, 65535, 26, 3, 27, 65535, 3, 27, 45, 3, 45, 27, 3, 65535, 27, 3, 28, 65535, 3, 28, 45, 3, 45, 28, 3, 65535, 28, 3, 29, 65535, 3, 29, 45, 3, 45, 29, 3, 65535, 29, 3, 30, 65535, 3, 30, 45, 3, 45, 30, 3, 65535, 30, 3, 31, 65535, 3, 31, 45, 3, 45, 31, 3, 65535, 31, 3, 32, 65535, 3, 32, 45, 3, 45, 32, 3, 65535, 32, 3, 33, 65535, 3, 33, 45, 3, 45, 33, 3, 65535, 33, 3, 34, 65535, 3, 34, 45, 3, 45, 34, 3, 65535, 34, 3, 35, 65535, 3, 35, 45, 3, 45, 35, 3, 65535, 35, 3, 36, 65535, 3, 36, 45, 3, 45, 36, 3, 65535, 36, 3, 37, 65535, 3, 37, 45, 3, 45, 37, 3, 65535, 37, 3, 38, 65535, 3, 38, 45, 3, 45, 38, 3, 65535, 38, 3, 39, 65535, 3, 39, 45, 3, 45, 39, 3, 65535, 39, 3, 40, 65535, 3, 40, 45, 3, 45, 40, 3, 65535, 40, 3, 41, 65535, 3, 41, 45, 3, 45, 41, 3, 65535, 41, 3, 42, 65535, 3, 42, 45, 3, 45, 42, 3, 65535, 42, 3, 43, 65535, 3, 43, 45, 3, 45, 43, 3, 65535, 43, 3, 44, 65535, 3, 44, 45, 3, 45, 44, 3, 65535, 44, 3, 45, 45, 3, 27, 6, 2, 28, 6, 0, 29, 6, 0, 30, 6, 0, 31, 6, 0, 32, 6, 0, 33, 6, 0, 27, 7, 0, 28, 7, 0, 29, 7, 0, 30, 7, 0, 31, 7, 0, 32, 7, 0, 33, 7, 0, 27, 8, 0, 28, 8, 0, 29, 8, 0, 30, 8, 0, 31, 8, 0, 32, 8, 0, 33, 8, 0, 27, 9, 0, 28, 9, 0, 29, 9, 0, 30, 9, 0, 31, 9, 0, 32, 9, 0, 33, 9, 0, 27, 10, 0, 28, 10, 0, 29, 10, 0, 30, 10, 0, 31, 10, 0, 32, 10, 0, 33, 10, 2, 3, 2, 0, 4, 2, 0, 5, 2, 0, 6, 2, 0, 7, 2, 0, 8, 2, 0, 9, 2, 0, 3, 3, 0, 4, 3, 0, 5, 3, 0, 6, 3, 0, 7, 3, 0, 8, 3, 0, 9, 3, 0, 3, 4, 0, 4, 4, 0, 5, 4, 0, 6, 4, 0, 7, 4, 0, 8, 4, 0, 9, 4, 0, 3, 5, 0, 4, 5, 0, 5, 5, 0, 6, 5, 0, 7, 5, 0, 8, 5, 0, 9, 5, 0, 3, 6, 0, 4, 6, 0, 5, 6, 0, 6, 6, 0, 7, 6, 0, 8, 6, 0, 9, 6, 0, 3, 7, 0, 4, 7, 0, 5, 7, 0, 6, 7, 0, 7, 7, 0, 8, 7, 0, 9, 7, 0, 3, 8, 0, 4, 8, 0, 5, 8, 2, 6, 8, 0, 7, 8, 0, 8, 8, 0, 9, 8, 2, 2, 22, 0, 3, 22, 0, 4, 22, 0, 5, 22, 0, 6, 22, 2, 7, 22, 0, 8, 22, 0, 2, 23, 0, 3, 23, 0, 4, 23, 0, 5, 23, 0, 6, 23, 0, 7, 23, 0, 8, 23, 0, 2, 24, 0, 3, 24, 0, 4, 24, 0, 5, 24, 0, 6, 24, 0, 7, 24, 0, 8, 24, 0, 2, 25, 0, 3, 25, 0, 4, 25, 0, 5, 25, 0, 6, 25, 0, 7, 25, 0, 8, 25, 0, 2, 26, 0, 3, 26, 0, 4, 26, 0, 5, 26, 0, 6, 26, 0, 7, 26, 0, 8, 26, 0, 28, 39, 0, 29, 39, 0, 30, 39, 0, 31, 39, 0, 32, 39, 2, 28, 40, 0, 29, 40, 0, 30, 40, 0, 31, 40, 0, 32, 40, 0, 28, 41, 0, 29, 41, 0, 30, 41, 0, 31, 41, 0, 32, 41, 0, 28, 42, 0, 29, 42, 0, 30, 42, 0, 31, 42, 0, 32, 42, 0, 28, 43, 0, 29, 43, 0, 30, 43, 0, 31, 43, 0, 32, 43, 0, 35, 21, 2, 36, 21, 0, 37, 21, 0, 38, 21, 0, 39, 21, 0, 40, 21, 0, 41, 21, 0, 35, 22, 0, 36, 22, 0, 37, 22, 0, 38, 22, 0, 39, 22, 0, 40, 22, 0, 41, 22, 0, 35, 23, 0, 36, 23, 0, 37, 23, 0, 38, 23, 0, 39, 23, 0, 40, 23, 0, 41, 23, 0, 35, 24, 0, 36, 24, 0, 37, 24, 0, 38, 24, 0, 39, 24, 0, 40, 24, 0, 41, 24, 0, 35, 25, 2, 36, 25, 0, 37, 25, 0, 38, 25, 0, 39, 25, 0, 40, 25, 0, 41, 25, 0, 26, 6, 1, 26, 7, 1, 26, 8, 1, 25, 8, 1, 24, 8, 1, 23, 8, 1, 22, 8, 1, 21, 8, 1, 20, 8, 1, 19, 8, 1, 18, 8, 1, 17, 8, 1, 16, 8, 1, 15, 8, 1, 14, 8, 1, 13, 8, 1, 12, 8, 1, 11, 8, 1, 10, 8, 1, 34, 10, 1, 35, 10, 1, 35, 11, 1, 35, 12, 1, 35, 13, 1, 35, 14, 1, 35, 15, 1, 35, 16, 1, 35, 17, 1, 35, 18, 1, 35, 19, 1, 35, 20, 1, 32, 38, 1, 32, 37, 1, 32, 36, 1, 32, 35, 1, 32, 34, 1, 32, 33, 1, 32, 32, 1, 32, 31, 1, 32, 30, 1, 32, 29, 1, 32, 28, 1, 32, 27, 1, 32, 26, 1, 32, 25, 1, 33, 25, 1, 34, 25, 1, 5, 9, 1, 6, 9, 1, 6, 10, 1, 6, 11, 1, 6, 12, 1, 6, 13, 1, 6, 14, 1, 6, 15, 1, 6, 16, 1, 6, 17, 1, 6, 18, 1, 6, 19, 1, 6, 20, 1, 6, 21, 1)
+}
+metadata/_editor_floor_ = Vector3(0, 0, 0)
+
+[node name="Camera3D" type="Camera3D" parent="GridMap"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 2.907, 20, 18.081)
+h_offset = 15.0
+v_offset = -9.0
+fov = 114.7
+
+[node name="DunMesh" parent="." instance=ExtResource("3_of2g0")]
+
+[node name="DunCell" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 27.5, 0, 6.5)
+
+[node name="@Node3D@18497" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 28.5, 0, 6.5)
+
+[node name="@Node3D@18498" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 29.5, 0, 6.5)
+
+[node name="@Node3D@18499" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 30.5, 0, 6.5)
+
+[node name="@Node3D@18500" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 31.5, 0, 6.5)
+
+[node name="@Node3D@18501" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 32.5, 0, 6.5)
+
+[node name="@Node3D@18502" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 33.5, 0, 6.5)
+
+[node name="@Node3D@18503" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 27.5, 0, 7.5)
+
+[node name="@Node3D@18504" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 28.5, 0, 7.5)
+
+[node name="@Node3D@18505" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 29.5, 0, 7.5)
+
+[node name="@Node3D@18506" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 30.5, 0, 7.5)
+
+[node name="@Node3D@18507" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 31.5, 0, 7.5)
+
+[node name="@Node3D@18508" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 32.5, 0, 7.5)
+
+[node name="@Node3D@18509" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 33.5, 0, 7.5)
+
+[node name="@Node3D@18510" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 27.5, 0, 8.5)
+
+[node name="@Node3D@18511" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 28.5, 0, 8.5)
+
+[node name="@Node3D@18512" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 29.5, 0, 8.5)
+
+[node name="@Node3D@18513" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 30.5, 0, 8.5)
+
+[node name="@Node3D@18514" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 31.5, 0, 8.5)
+
+[node name="@Node3D@18515" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 32.5, 0, 8.5)
+
+[node name="@Node3D@18516" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 33.5, 0, 8.5)
+
+[node name="@Node3D@18517" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 27.5, 0, 9.5)
+
+[node name="@Node3D@18518" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 28.5, 0, 9.5)
+
+[node name="@Node3D@18519" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 29.5, 0, 9.5)
+
+[node name="@Node3D@18520" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 30.5, 0, 9.5)
+
+[node name="@Node3D@18521" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 31.5, 0, 9.5)
+
+[node name="@Node3D@18522" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 32.5, 0, 9.5)
+
+[node name="@Node3D@18523" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 33.5, 0, 9.5)
+
+[node name="@Node3D@18524" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 27.5, 0, 10.5)
+
+[node name="@Node3D@18525" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 28.5, 0, 10.5)
+
+[node name="@Node3D@18526" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 29.5, 0, 10.5)
+
+[node name="@Node3D@18527" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 30.5, 0, 10.5)
+
+[node name="@Node3D@18528" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 31.5, 0, 10.5)
+
+[node name="@Node3D@18529" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 32.5, 0, 10.5)
+
+[node name="@Node3D@18530" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 33.5, 0, 10.5)
+
+[node name="@Node3D@18531" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 3.5, 0, 2.5)
+
+[node name="@Node3D@18532" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 4.5, 0, 2.5)
+
+[node name="@Node3D@18533" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 5.5, 0, 2.5)
+
+[node name="@Node3D@18534" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 6.5, 0, 2.5)
+
+[node name="@Node3D@18535" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 7.5, 0, 2.5)
+
+[node name="@Node3D@18536" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 8.5, 0, 2.5)
+
+[node name="@Node3D@18537" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 9.5, 0, 2.5)
+
+[node name="@Node3D@18538" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 3.5, 0, 3.5)
+
+[node name="_Node3D_18539" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 4.5, 0, 3.5)
+
+[node name="@Node3D@18540" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 5.5, 0, 3.5)
+
+[node name="@Node3D@18541" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 6.5, 0, 3.5)
+
+[node name="@Node3D@18542" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 7.5, 0, 3.5)
+
+[node name="@Node3D@18543" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 8.5, 0, 3.5)
+
+[node name="@Node3D@18544" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 9.5, 0, 3.5)
+
+[node name="@Node3D@18545" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 3.5, 0, 4.5)
+
+[node name="@Node3D@18546" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 4.5, 0, 4.5)
+
+[node name="@Node3D@18547" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 5.5, 0, 4.5)
+
+[node name="@Node3D@18548" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 6.5, 0, 4.5)
+
+[node name="@Node3D@18549" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 7.5, 0, 4.5)
+
+[node name="@Node3D@18550" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 8.5, 0, 4.5)
+
+[node name="@Node3D@18551" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 9.5, 0, 4.5)
+
+[node name="@Node3D@18552" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 3.5, 0, 5.5)
+
+[node name="@Node3D@18553" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 4.5, 0, 5.5)
+
+[node name="@Node3D@18554" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 5.5, 0, 5.5)
+
+[node name="@Node3D@18555" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 6.5, 0, 5.5)
+
+[node name="@Node3D@18556" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 7.5, 0, 5.5)
+
+[node name="@Node3D@18557" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 8.5, 0, 5.5)
+
+[node name="@Node3D@18558" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 9.5, 0, 5.5)
+
+[node name="@Node3D@18559" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 3.5, 0, 6.5)
+
+[node name="@Node3D@18560" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 4.5, 0, 6.5)
+
+[node name="@Node3D@18561" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 5.5, 0, 6.5)
+
+[node name="@Node3D@18562" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 6.5, 0, 6.5)
+
+[node name="@Node3D@18563" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 7.5, 0, 6.5)
+
+[node name="@Node3D@18564" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 8.5, 0, 6.5)
+
+[node name="@Node3D@18565" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 9.5, 0, 6.5)
+
+[node name="@Node3D@18566" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 3.5, 0, 7.5)
+
+[node name="@Node3D@18567" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 4.5, 0, 7.5)
+
+[node name="@Node3D@18568" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 5.5, 0, 7.5)
+
+[node name="@Node3D@18569" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 6.5, 0, 7.5)
+
+[node name="@Node3D@18570" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 7.5, 0, 7.5)
+
+[node name="@Node3D@18571" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 8.5, 0, 7.5)
+
+[node name="@Node3D@18572" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 9.5, 0, 7.5)
+
+[node name="@Node3D@18573" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 3.5, 0, 8.5)
+
+[node name="@Node3D@18574" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 4.5, 0, 8.5)
+
+[node name="@Node3D@18575" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 5.5, 0, 8.5)
+
+[node name="@Node3D@18576" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 6.5, 0, 8.5)
+
+[node name="@Node3D@18577" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 7.5, 0, 8.5)
+
+[node name="@Node3D@18578" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 8.5, 0, 8.5)
+
+[node name="@Node3D@18579" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 9.5, 0, 8.5)
+
+[node name="@Node3D@18580" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 2.5, 0, 22.5)
+
+[node name="@Node3D@18581" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 3.5, 0, 22.5)
+
+[node name="@Node3D@18582" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 4.5, 0, 22.5)
+
+[node name="@Node3D@18583" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 5.5, 0, 22.5)
+
+[node name="@Node3D@18584" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 6.5, 0, 22.5)
+
+[node name="@Node3D@18585" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 7.5, 0, 22.5)
+
+[node name="@Node3D@18586" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 8.5, 0, 22.5)
+
+[node name="@Node3D@18587" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 2.5, 0, 23.5)
+
+[node name="@Node3D@18588" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 3.5, 0, 23.5)
+
+[node name="@Node3D@18589" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 4.5, 0, 23.5)
+
+[node name="@Node3D@18590" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 5.5, 0, 23.5)
+
+[node name="@Node3D@18591" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 6.5, 0, 23.5)
+
+[node name="@Node3D@18592" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 7.5, 0, 23.5)
+
+[node name="@Node3D@18593" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 8.5, 0, 23.5)
+
+[node name="@Node3D@18594" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 2.5, 0, 24.5)
+
+[node name="@Node3D@18595" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 3.5, 0, 24.5)
+
+[node name="@Node3D@18596" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 4.5, 0, 24.5)
+
+[node name="@Node3D@18597" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 5.5, 0, 24.5)
+
+[node name="@Node3D@18598" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 6.5, 0, 24.5)
+
+[node name="@Node3D@18599" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 7.5, 0, 24.5)
+
+[node name="@Node3D@18600" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 8.5, 0, 24.5)
+
+[node name="@Node3D@18601" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 2.5, 0, 25.5)
+
+[node name="@Node3D@18602" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 3.5, 0, 25.5)
+
+[node name="@Node3D@18603" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 4.5, 0, 25.5)
+
+[node name="@Node3D@18604" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 5.5, 0, 25.5)
+
+[node name="@Node3D@18605" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 6.5, 0, 25.5)
+
+[node name="@Node3D@18606" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 7.5, 0, 25.5)
+
+[node name="@Node3D@18607" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 8.5, 0, 25.5)
+
+[node name="@Node3D@18608" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 2.5, 0, 26.5)
+
+[node name="@Node3D@18609" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 3.5, 0, 26.5)
+
+[node name="@Node3D@18610" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 4.5, 0, 26.5)
+
+[node name="@Node3D@18611" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 5.5, 0, 26.5)
+
+[node name="@Node3D@18612" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 6.5, 0, 26.5)
+
+[node name="@Node3D@18613" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 7.5, 0, 26.5)
+
+[node name="@Node3D@18614" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 8.5, 0, 26.5)
+
+[node name="@Node3D@18615" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 28.5, 0, 39.5)
+
+[node name="@Node3D@18616" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 29.5, 0, 39.5)
+
+[node name="@Node3D@18617" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 30.5, 0, 39.5)
+
+[node name="@Node3D@18618" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 31.5, 0, 39.5)
+
+[node name="@Node3D@18619" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 32.5, 0, 39.5)
+
+[node name="@Node3D@18620" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 28.5, 0, 40.5)
+
+[node name="@Node3D@18621" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 29.5, 0, 40.5)
+
+[node name="@Node3D@18622" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 30.5, 0, 40.5)
+
+[node name="@Node3D@18623" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 31.5, 0, 40.5)
+
+[node name="@Node3D@18624" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 32.5, 0, 40.5)
+
+[node name="@Node3D@18625" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 28.5, 0, 41.5)
+
+[node name="@Node3D@18626" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 29.5, 0, 41.5)
+
+[node name="@Node3D@18627" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 30.5, 0, 41.5)
+
+[node name="@Node3D@18628" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 31.5, 0, 41.5)
+
+[node name="@Node3D@18629" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 32.5, 0, 41.5)
+
+[node name="@Node3D@18630" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 28.5, 0, 42.5)
+
+[node name="@Node3D@18631" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 29.5, 0, 42.5)
+
+[node name="@Node3D@18632" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 30.5, 0, 42.5)
+
+[node name="@Node3D@18633" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 31.5, 0, 42.5)
+
+[node name="@Node3D@18634" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 32.5, 0, 42.5)
+
+[node name="@Node3D@18635" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 28.5, 0, 43.5)
+
+[node name="@Node3D@18636" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 29.5, 0, 43.5)
+
+[node name="@Node3D@18637" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 30.5, 0, 43.5)
+
+[node name="@Node3D@18638" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 31.5, 0, 43.5)
+
+[node name="@Node3D@18639" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 32.5, 0, 43.5)
+
+[node name="@Node3D@18640" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 35.5, 0, 21.5)
+
+[node name="@Node3D@18641" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 36.5, 0, 21.5)
+
+[node name="@Node3D@18642" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 37.5, 0, 21.5)
+
+[node name="@Node3D@18643" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 38.5, 0, 21.5)
+
+[node name="@Node3D@18644" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 39.5, 0, 21.5)
+
+[node name="@Node3D@18645" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 40.5, 0, 21.5)
+
+[node name="@Node3D@18646" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 41.5, 0, 21.5)
+
+[node name="@Node3D@18647" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 35.5, 0, 22.5)
+
+[node name="@Node3D@18648" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 36.5, 0, 22.5)
+
+[node name="@Node3D@18649" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 37.5, 0, 22.5)
+
+[node name="@Node3D@18650" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 38.5, 0, 22.5)
+
+[node name="@Node3D@18651" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 39.5, 0, 22.5)
+
+[node name="@Node3D@18652" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 40.5, 0, 22.5)
+
+[node name="@Node3D@18653" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 41.5, 0, 22.5)
+
+[node name="@Node3D@18654" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 35.5, 0, 23.5)
+
+[node name="@Node3D@18655" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 36.5, 0, 23.5)
+
+[node name="@Node3D@18656" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 37.5, 0, 23.5)
+
+[node name="@Node3D@18657" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 38.5, 0, 23.5)
+
+[node name="@Node3D@18658" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 39.5, 0, 23.5)
+
+[node name="@Node3D@18659" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 40.5, 0, 23.5)
+
+[node name="@Node3D@18660" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 41.5, 0, 23.5)
+
+[node name="@Node3D@18661" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 35.5, 0, 24.5)
+
+[node name="@Node3D@18662" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 36.5, 0, 24.5)
+
+[node name="@Node3D@18663" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 37.5, 0, 24.5)
+
+[node name="@Node3D@18664" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 38.5, 0, 24.5)
+
+[node name="@Node3D@18665" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 39.5, 0, 24.5)
+
+[node name="@Node3D@18666" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 40.5, 0, 24.5)
+
+[node name="@Node3D@18667" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 41.5, 0, 24.5)
+
+[node name="@Node3D@18668" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 35.5, 0, 25.5)
+
+[node name="@Node3D@18669" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 36.5, 0, 25.5)
+
+[node name="@Node3D@18670" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 37.5, 0, 25.5)
+
+[node name="@Node3D@18671" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 38.5, 0, 25.5)
+
+[node name="@Node3D@18672" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 39.5, 0, 25.5)
+
+[node name="@Node3D@18673" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 40.5, 0, 25.5)
+
+[node name="@Node3D@18674" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 41.5, 0, 25.5)
+
+[node name="@Node3D@18675" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 26.5, 0, 6.5)
+
+[node name="@Node3D@18676" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 26.5, 0, 7.5)
+
+[node name="@Node3D@18677" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 26.5, 0, 8.5)
+
+[node name="@Node3D@18678" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 25.5, 0, 8.5)
+
+[node name="@Node3D@18679" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 24.5, 0, 8.5)
+
+[node name="@Node3D@18680" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 23.5, 0, 8.5)
+
+[node name="@Node3D@18681" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 22.5, 0, 8.5)
+
+[node name="@Node3D@18682" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 21.5, 0, 8.5)
+
+[node name="@Node3D@18683" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 20.5, 0, 8.5)
+
+[node name="@Node3D@18684" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 19.5, 0, 8.5)
+
+[node name="@Node3D@18685" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 18.5, 0, 8.5)
+
+[node name="@Node3D@18686" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 17.5, 0, 8.5)
+
+[node name="@Node3D@18687" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 16.5, 0, 8.5)
+
+[node name="@Node3D@18688" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 15.5, 0, 8.5)
+
+[node name="@Node3D@18689" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 14.5, 0, 8.5)
+
+[node name="@Node3D@18690" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 13.5, 0, 8.5)
+
+[node name="@Node3D@18691" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 12.5, 0, 8.5)
+
+[node name="@Node3D@18692" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 11.5, 0, 8.5)
+
+[node name="@Node3D@18693" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 10.5, 0, 8.5)
+
+[node name="@Node3D@18694" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 34.5, 0, 10.5)
+
+[node name="@Node3D@18695" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 35.5, 0, 10.5)
+
+[node name="@Node3D@18696" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 35.5, 0, 11.5)
+
+[node name="@Node3D@18697" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 35.5, 0, 12.5)
+
+[node name="@Node3D@18698" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 35.5, 0, 13.5)
+
+[node name="@Node3D@18699" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 35.5, 0, 14.5)
+
+[node name="@Node3D@18700" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 35.5, 0, 15.5)
+
+[node name="@Node3D@18701" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 35.5, 0, 16.5)
+
+[node name="@Node3D@18702" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 35.5, 0, 17.5)
+
+[node name="@Node3D@18703" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 35.5, 0, 18.5)
+
+[node name="@Node3D@18704" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 35.5, 0, 19.5)
+
+[node name="@Node3D@18705" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 35.5, 0, 20.5)
+
+[node name="@Node3D@18706" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 32.5, 0, 38.5)
+
+[node name="@Node3D@18707" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 32.5, 0, 37.5)
+
+[node name="@Node3D@18708" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 32.5, 0, 36.5)
+
+[node name="@Node3D@18709" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 32.5, 0, 35.5)
+
+[node name="@Node3D@18710" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 32.5, 0, 34.5)
+
+[node name="@Node3D@18711" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 32.5, 0, 33.5)
+
+[node name="@Node3D@18712" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 32.5, 0, 32.5)
+
+[node name="@Node3D@18713" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 32.5, 0, 31.5)
+
+[node name="@Node3D@18714" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 32.5, 0, 30.5)
+
+[node name="@Node3D@18715" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 32.5, 0, 29.5)
+
+[node name="@Node3D@18716" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 32.5, 0, 28.5)
+
+[node name="@Node3D@18717" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 32.5, 0, 27.5)
+
+[node name="@Node3D@18718" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 32.5, 0, 26.5)
+
+[node name="@Node3D@18719" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 32.5, 0, 25.5)
+
+[node name="@Node3D@18720" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 33.5, 0, 25.5)
+
+[node name="@Node3D@18721" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 34.5, 0, 25.5)
+
+[node name="@Node3D@18722" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 5.5, 0, 9.5)
+
+[node name="@Node3D@18723" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 6.5, 0, 9.5)
+
+[node name="@Node3D@18724" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 6.5, 0, 10.5)
+
+[node name="@Node3D@18725" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 6.5, 0, 11.5)
+
+[node name="@Node3D@18726" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 6.5, 0, 12.5)
+
+[node name="@Node3D@18727" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 6.5, 0, 13.5)
+
+[node name="@Node3D@18728" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 6.5, 0, 14.5)
+
+[node name="@Node3D@18729" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 6.5, 0, 15.5)
+
+[node name="@Node3D@18730" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 6.5, 0, 16.5)
+
+[node name="@Node3D@18731" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 6.5, 0, 17.5)
+
+[node name="@Node3D@18732" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 6.5, 0, 18.5)
+
+[node name="@Node3D@18733" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 6.5, 0, 19.5)
+
+[node name="@Node3D@18734" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 6.5, 0, 20.5)
+
+[node name="@Node3D@18735" parent="DunMesh" instance=ExtResource("4_pki75")]
+transform = Transform3D(1, 4.37114e-08, -1.74846e-07, -4.37114e-08, 1, 4.37114e-08, 1.74846e-07, -4.37114e-08, 1, 6.5, 0, 21.5)

@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://k1vgp6sju3ld"]
+
+[ext_resource type="PackedScene" uid="uid://ce0sukbhqo1ew" path="res://dungeon generation/dun_gen.tscn" id="1_embsf"]
+[ext_resource type="PackedScene" uid="uid://cq34klj2tvufg" path="res://GUI.tscn" id="2_8klnw"]
+
+[node name="MainScene" type="Node3D"]
+
+[node name="DunGen" parent="." instance=ExtResource("1_embsf")]
+
+[node name="GUI" parent="." instance=ExtResource("2_8klnw")]
