@@ -4,6 +4,8 @@
 #Using coordinates like matrix indices (row, column)
 
 import heapq
+from char_const import *
+from char_objs import *
 
 def bresenham_line(x0, y0, x1, y1):
     cells = []
@@ -61,7 +63,7 @@ def calculate_fov(x, y, radius, dungeon_map):
                     visible.add((x+dx, y+dy))
     return visible
 
-
+##### A* Implementation #####
 
 class Node:
     def __init__(self, position, g_cost, h_cost, parent):
@@ -83,7 +85,7 @@ def get_neighbors(grid, node):
         new_position = (node.position[0] + dx, node.position[1] + dy)
         if (0 <= new_position[0] < len(grid) and 
             0 <= new_position[1] < len(grid[0]) and 
-            grid[new_position[0]][new_position[1]] != '#'):  # '#' represents wall/obstacle
+            grid[new_position[0]][new_position[1]] != '#  '):  # '#' represents wall/obstacle
             neighbors.append(new_position)
     return neighbors
 
@@ -124,6 +126,39 @@ def a_star(grid, start, goal):
     return None  # No path found
 
 
+board_1 = [
+  ['#  ', '#  ', '#  ', '#  ', '#  ', '#  ', '#  ', '#  ', '#  ', '#  '], # 0
+  ['#  ', "M  ", '.  ', '.  ', '@+J', '.  ', '.  ', 'g  ', 'G  ', '#  '], # 1 
+  ['#  ', '#  ', '#  ', '#  ', '#  ', '.  ', '.  ', '#  ', '#  ', '#  '], # 2
+  ['#  ', 'w  ', '.  ', '.  ', '.  ', '.  ', '.  ', '.  ', 'P  ', '#  '], # 3
+  ['#  ', 'g  ', '.  ', '.  ', '.  ', '.  ', '#  ', '#  ', 'G  ', '#  '], # 4
+  ['#  ', '#  ', '#  ', '#  ', '#  ', '.  ', '#  ', '#  ', '#  ', '#  '], # 5
+  ['#  ', 'P  ', '.  ', '.  ', 'g  ', '.  ', 'g  ', '.  ', '.  ', '#  '], # 6
+  ['#  ', '#  ', '#  ', '#  ', '.  ', '#  ', '#  ', '#  ', '#  ', '#  '],
+  ['#  ', '.  ', '.  ', 'T  ', '.  ', '.  ', '.  ', '.  ', 'A  ', '#  '],
+  ['#  ', '.  ', '#  ', '#  ', '.  ', '#  ', '#  ', '#  ', '.  ', '#  '],
+  ['#  ', '.  ', '#  ', 'b  ', '.  ', 'b  ', '.  ', '.  ', '.  ', '#  '],
+  ['#  ', '.  ', '#  ', '.  ', '#  ', '#  ', '#  ', '#  ', '#  ', '#  '],
+  ['#  ', '.  ', '.  ', '.  ', '.  ', '.  ', '.  ', '.  ', '.  ', '#  '],
+  ['#  ', '#  ', '#  ', '#  ', '#  ', '#  ', '#  ', '#  ', '.  ', '#  '],
+  ['#  ', 'g  ', '.  ', '.  ', '.  ', '.  ', '.  ', '.  ', '.  ', '#  '],
+  ['#  ', '.  ', '#  ', '#  ', '.  ', '.  ', '#  ', '#  ', '.  ', '#  '],
+  ['#  ', '.  ', '#  ', '#  ', '.  ', '.  ', '#  ', '#  ', '.  ', '#  '],
+  ['#  ', '.  ', '.  ', 'g  ', '.  ', '.  ', 'g  ', '.  ', '.  ', '#  '],
+  ['#  ', 'B  ', '.  ', '.  ', '.  ', '.  ', '.  ', '.  ', '.  ', 'E  '],
+  ['#  ', '#  ', '#  ', '#  ', '#  ', '#  ', '#  ', '#  ', '#  ', '#  ']
+]   #  0,     1,     2,     3,     4,     5,     6,     7,    8,     9,
+
+
+"""
+print(has_line_of_sight(1, 4, 1, 1, board_1))  # True
+print(has_line_of_sight(1, 4, 3, 5, board_1))  # False
+print(has_line_of_sight(1, 4, 3, 6, board_1))  # True
+print(has_line_of_sight(1, 4, 3, 7, board_1))  # True
+print(has_line_of_sight(1, 4, 3, 8, board_1))  # False
+print(has_line_of_sight(1, 4, 6, 7, board_1))  # False
+
+
 #def generate_a_star(grid, start, goal):
 
 # Example usage
@@ -159,8 +194,30 @@ if path:
 else:
     print("No path found")
 
+"""
 
-###### Map Moves to Matrix Coordinates
+##### Core Board Utilities #####
+
+# Need to implement valid_move concomittantly 
+def get_player_move():
+    """Gets player input validates it; returns move"""
+    # Moves: "Up", "Down", "Right", "Left", Throw Javelin"
+    valid_moves = ["U", "D", "R", "L", "J"]
+
+    while True:      
+      move = input("Enter your move (options: " + ", ".join(valid_moves) + "): ").upper()
+      if move in valid_moves:
+        # check for validity of the move and ask for the input again if its invalid move
+        print("You entered:", move)
+        if move == "J":
+            # Javelin throw logic (replace with full implementation)
+            # Check if the npc is in the line-of-sight and then use
+            print("Javelin throw not yet implemented! Try again.")
+            return "IDLE"
+        
+        return move
+      else:
+        print("Invalid instruction. Please try again.")
 
 def move_to_coor(move):
     """
@@ -182,37 +239,179 @@ def move_to_coor(move):
             return (20, 20)
         case _:  # Default case
             return (0, 0)
+       
+def map_board(board):
+    """
+    Funtion to map board objects/characters to respective class objects with indices and location.
+    Objects Created:
+    npc_order: list -> created in order top-left -> bottom-right
+    object_dict: dict ->  available objects with indices
+    monster_dict: dict -> available monsters with indices
+    self.player: obj, self.javelin: obj -> instantiated.
+    self.exit: obj -> assigned coordinates of exit.
+    """
+    object_dict = {}
+    monster_dict = {}
+    pot_idx, treas_idx, portal_idx, trap_idx = 1, 1, 1, 1
+    blob_idx, gob_idx, wiz_idx, ogre_idx, minot_idx = 1, 1, 1, 1, 1
+    
+    """
+    The NPCs move in turn according to their original position on the map, starting from the top left 
+    corner and moving row-wise left-to-right until the bottom right corner is reached. This initial 
+    move sequence is retained even if NPCs later move to other locations. 
+    """
+    npc_order = []
 
+    for row in range(len(board)):
+      for col in range(len(board[row])):
+        cell = board[row][col]
 
-board_1 = [
-  ['#', '#', '#', '#', '#', '#', '#', '#', '#', '#'], # 0
-  ['#', "M", '.', '.', '@', '.', '.', 'g', 'G', '#'], # 1 
-  ['#', '#', '#', '#', '#', '.', '.', '#', '#', '#'], # 2
-  ['#', 'w', '.', '.', '.', '.', '.', '.', 'P', '#'], # 3
-  ['#', 'g', '.', '.', '.', '.', '#', '#', 'G', '#'], # 4
-  ['#', '#', '#', '#', '#', '.', '#', '#', '#', '#'], # 5
-  ['#', 'P', '.', '.', 'g', '.', 'g', '.', '.', '#'], # 6
-  ['#', '#', '#', '#', '.', '#', '#', '#', '#', '#'],
-  ['#', '.', '.', 'T', '.', '.', '.', '.', 'A', '#'],
-  ['#', '.', '#', '#', '.', '#', '#', '#', '.', '#'],
-  ['#', '.', '#', 'b', '.', 'b', '.', '.', '.', '#'],
-  ['#', '.', '#', '.', '#', '#', '#', '#', '#', '#'],
-  ['#', '.', '.', '.', '.', '.', '.', '.', '.', '#'],
-  ['#', '#', '#', '#', '#', '#', '#', '#', '.', '#'],
-  ['#', 'g', '.', '.', '.', '.', '.', '.', '.', '#'],
-  ['#', '.', '#', '#', '.', '.', '#', '#', '.', '#'],
-  ['#', '.', '#', '#', '.', '.', '#', '#', '.', '#'],
-  ['#', '.', '.', 'g', '.', '.', 'g', '.', '.', '#'],
-  ['#', 'B', '.', '.', '.', '.', '.', '.', '.', 'E'],
-  ['#', '#', '#', '#', '#', '#', '#', '#', '#', '#']
-] #  0,   1,   2,   3,   4,   5,   6,   7,  8,   9,
+        #### Objects
+        if cell == "@+J":
+          # Instantiate Player and his Javelin
+          monster_dict["Hero"] = Hero(name="Hero", hp=PLAYER_HP, damage=1, x=row, y=col)
+          object_dict["Javelin"] = javelin(row, col, value=1)
+        
+        elif cell == POTION:
+          object_dict["Potion" + str(pot_idx)] = potion("Potion", row, col, value=1, index=pot_idx)
+          pot_idx += 1
+        elif cell == TREASURE:
+          # Not sure how much value to increase treasure; assume 1
+          object_dict["Treasure" + str(treas_idx)] = treasure("Treasure", row, col, value=1, index=treas_idx)
+          treas_idx += 1
+        elif cell == PORTAL_A or cell == PORTAL_B:
+          object_dict["Portal" + str(portal_idx)] = portal("Portal", row, col, index=portal_idx)
+          portal_idx += 1
+        elif cell == TRAP:
+          object_dict["Trap" + str(trap_idx)] = trap("Trap", row, col, value=1, index=trap_idx)
+          trap_idx += 1
+        
+        ##### Monsters
+        elif cell == GOBLIN:
+          monster_dict["Goblin" + str(gob_idx)] = goblin("Goblin", x=row, y=col, hp=GOBLIN_HP, 
+                                                         damage=GOBLIN_DAMAGE, index=gob_idx)
+          npc_order.append("Goblin" + str(gob_idx))
+          gob_idx += 1
+        elif cell == WIZARD:
+          monster_dict["Wizard" + str(wiz_idx)] = wizard("Wizard", x=row, y=col, hp=WIZARD_HP,
+                                                         damage=WIZARD_DAMAGE,index=wiz_idx)
+          npc_order.append("Wizard" + str(wiz_idx))
+          wiz_idx += 1
+        elif cell == BLOB:
+          monster_dict["Blob" + str(blob_idx)] = blob("Blob", x=row, y=col, level=1,
+                                                      hp=BLOB_LEVELS[1][0], damage=BLOB_LEVELS[1][1],
+                                                      index=blob_idx)
+          npc_order.append("Blob" + str(blob_idx))
+          blob_idx += 1
+        elif cell == OGRE:
+          monster_dict["Ogre" + str(ogre_idx)] = ogre("Ogre", x=row, y=col, hp=OGRE_HP, 
+                                                      damage=OGRE_DAMAGE, index=ogre_idx)
+          npc_order.append("Ogre" + str(ogre_idx))
+          ogre_idx += 1
+        elif cell == MINOTAUR:
+          monster_dict["Minotaur" + str(minot_idx)] = minotaur("Minotaur", x=row, y=col, 
+                                                               hp=100000, damage=MINOTAUR_DAMAGE,
+                                                               index=minot_idx)
+          npc_order.append("Minotaur" + str(minot_idx))
+          minot_idx += 1
 
+        #Making not of exit
+        elif cell == EXIT:
+          exit = board_exit("exit", x=row, y=col)
+
+    # Testing     
+    """
+    print(self.object_dict.keys())
+    print(self.monster_dict.keys())
+    print(self.npc_order)
+    print(self.player)
+    print(self.exit)
+    """
+
+    return (object_dict, monster_dict, npc_order, exit)
+
+def lookup_index(object_dict, monster_dict, name, x, y) -> int:
+    """
+    Returns Object/Character index given name, location
+    """
+    for key in object_dict.keys():
+      if name in key:
+        if object_dict[key].x == x and object_dict[key].y == y:
+          return object_dict[key].index
+
+    for key in monster_dict.keys():
+      if name in key:
+        if monster_dict[key].x == x and monster_dict[key].y == y:
+          return monster_dict[key].index
+
+def parse_tiles(tile):
+    """
+    Return objects occupying a tile on the board other than the player.
+    """
+    objs = []
+    for code in tile:
+      # 
+      if code != "+":
+        objs.append(BOARD_LOOKUP[code])
+        
+    return objs
+
+def print_board(board):
+    """Prints the current state of the board: 10 by 20 tile grid."""
+    for row in board:
+      for cell in row:
+        print(cell, end=" ")
+      print()  # Newline 
+
+def monster_present(obj_list):
+    """
+    Finds if the tile containes a monster and returns the name. Else "No"
+    """
+    for obj in obj_list:
+       if obj in MONSTER_LIST:
+          return obj
+    return False
+
+# Tile Convention:
+# (Character > Javelin > Item)
+
+def add_player_to(tile, has_javelin):
+   pass
+
+def remove_player_from(tile):
+   """
+   Needed when tile has Trap, Portal B or just the Floor
+   Remember Tile Convention
+   """
+   occupants = parse_tiles(tile)
+   if occupants[-1] == "Trap":
+      return TRAP
+   elif occupants[-1] == "Portal":
+      return PORTAL_B
+   elif occupants[-1] == "Javelin":
+      return FLOOR
+
+### Possible Tiles other than the players(with or w/o javelin)
+# 1. Wall (eliminated by validation_move)
+# 2. Empty Floor
+# 3. Item  (triggers collision from here on down)
+# 4. Item + Javelin (After the injured monster vacates)
+# 5. Monster Tiles (no movement into tiles with monsters)
+# 6. Monster + Item
+# 7. Monster + Item + Javelin (exceptional)
+
+#### Possible Player Tiles
+# 1. Player on empty Floor
+# 2. Player + Javelin
+# 3. Player (w/ or w/o Javelin) + Trap/Portal(After popping up in new portal)
+
+### Not Possible Tiles
+# 1. Player (w/ or w/o javelin) + Monster
+# 2. Multiple Monsters in same tile (expect when Minotaur is knocked out); in that case 
+#   make it dissapear for a while.
 
 """
-print(has_line_of_sight(1, 4, 1, 1, board_1))  # True
-print(has_line_of_sight(1, 4, 3, 5, board_1))  # False
-print(has_line_of_sight(1, 4, 3, 6, board_1))  # True
-print(has_line_of_sight(1, 4, 3, 7, board_1))  # True
-print(has_line_of_sight(1, 4, 3, 8, board_1))  # False
-print(has_line_of_sight(1, 4, 6, 7, board_1))  # False
+print(remove_player_from("@+B")+"**")
+print(remove_player_from("@JT")+"**")
+print(remove_player_from("@+J")+"**")
 """
