@@ -1,0 +1,7 @@
+ea4bc82a6ad023ab7ee23ee620429895
+::res://::1721852004
+DunMesh.tres::MeshLibrary::6615114895654824645::1721851766::0::1::::<><>::
+dun_gen.gd::GDScript::-1::1721851626::0::1::::<>Node3D<>::
+dun_gen.tscn::PackedScene::86081427621730258::1721851952::0::1::::<><>::uid://c1in8gc35mlvp::::res://DunMesh.tres<>res://dun_gen.gd
+icon.svg::CompressedTexture2D::1560511035181702767::1721847271::1721847275::1::::<><>::
+mesh.tscn::PackedScene::1334870031214202553::1721847380::0::1::::<><>::
