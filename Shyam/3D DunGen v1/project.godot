@@ -10,7 +10,6 @@ config_version=5
 
 [application]
 
-config/name="Test1"
-run/main_scene="res://dungeon generation/dun_gen.tscn"
+config/name="Test"
 config/features=PackedStringArray("4.2", "Forward Plus")
 config/icon="res://icon.svg"
