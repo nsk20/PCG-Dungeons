@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://c6pgagxohnlq0"]
+
+[ext_resource type="Script" path="res://DunMesh.gd" id="1_gso18"]
+
+[node name="DunMesh" type="Node3D"]
+script = ExtResource("1_gso18")
