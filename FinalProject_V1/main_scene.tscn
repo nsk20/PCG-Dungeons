@@ -1,0 +1,37 @@
+[gd_scene load_steps=3 format=3 uid="uid://700s0c3u3ldn"]
+
+[ext_resource type="Script" path="res://main_scene.gd" id="1_twi03"]
+[ext_resource type="Texture2D" uid="uid://cwfk7ksfm1q" path="res://bg_img.jpg" id="2_lloxh"]
+
+[node name="CanvasLayer" type="CanvasLayer"]
+script = ExtResource("1_twi03")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_lloxh")
+expand_mode = 2
+
+[node name="Label" type="Label" parent="."]
+offset_left = 341.0
+offset_top = 260.0
+offset_right = 809.0
+offset_bottom = 469.0
+theme_override_font_sizes/font_size = 75
+text = "Dungeon 
+Generator"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button" type="Button" parent="."]
+offset_left = 823.0
+offset_top = 516.0
+offset_right = 1098.0
+offset_bottom = 596.0
+theme_override_font_sizes/font_size = 35
+text = "Start Game"
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

@@ -1,0 +1,25 @@
+[gd_scene load_steps=2 format=3 uid="uid://brsm7v84dhlng"]
+
+[ext_resource type="Script" path="res://selection_scene.gd" id="1_4l5cd"]
+
+[node name="CanvasLayer" type="CanvasLayer"]
+script = ExtResource("1_4l5cd")
+
+[node name="Button" type="Button" parent="."]
+offset_left = 122.0
+offset_top = 250.0
+offset_right = 418.0
+offset_bottom = 410.0
+theme_override_font_sizes/font_size = 35
+text = "2D"
+
+[node name="Button2" type="Button" parent="."]
+offset_left = 618.0
+offset_top = 256.0
+offset_right = 910.0
+offset_bottom = 404.0
+theme_override_font_sizes/font_size = 35
+text = "3D"
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="Button2" to="." method="_on_button_2_pressed"]
