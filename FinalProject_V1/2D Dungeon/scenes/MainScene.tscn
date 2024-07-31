@@ -1,0 +1,115 @@
+[gd_scene load_steps=9 format=3 uid="uid://c3t762umcvydp"]
+
+[ext_resource type="Script" path="res://2D Dungeon/scenes/MainScene.gd" id="1_icx4k"]
+[ext_resource type="Texture2D" uid="uid://dguqxlvl1nqgn" path="res://2D Dungeon/assets/Stairs Tool.png" id="2_s27ck"]
+[ext_resource type="Texture2D" uid="uid://ctxku51vfptbh" path="res://2D Dungeon/assets/Regular Polygon Tool.png" id="3_v4p47"]
+[ext_resource type="Texture2D" uid="uid://42e05b08oec4" path="res://2D Dungeon/assets/Path Tool.png" id="4_nwuyi"]
+[ext_resource type="Texture2D" uid="uid://cw10uqaiyl0nu" path="res://2D Dungeon/assets/Rectangle Tool.png" id="5_ci534"]
+[ext_resource type="Texture2D" uid="uid://n2a0yyodsle" path="res://2D Dungeon/assets/Wall Tool.png" id="6_a6dyj"]
+[ext_resource type="Texture2D" uid="uid://wpm5t6m35usp" path="res://2D Dungeon/assets/Door Tool.png" id="7_fqona"]
+[ext_resource type="Texture2D" uid="uid://bee6ke8218eq7" path="res://2D Dungeon/assets/Polygon Tool.png" id="8_3uihm"]
+
+[node name="MainScene" type="Control"]
+layout_mode = 3
+anchor_left = 0.019
+anchor_top = 0.024
+anchor_right = 0.988
+anchor_bottom = 0.98
+offset_left = -14.888
+offset_top = -11.552
+offset_right = 12.824
+offset_bottom = 11.96
+size_flags_horizontal = 3
+script = ExtResource("1_icx4k")
+metadata/_edit_use_anchors_ = true
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+offset_right = 112.0
+offset_bottom = 643.0
+
+[node name="StairToolButton" type="Button" parent="Panel"]
+layout_mode = 0
+offset_left = 21.0
+offset_top = 25.0
+offset_right = 81.0
+offset_bottom = 95.0
+icon = ExtResource("2_s27ck")
+expand_icon = true
+
+[node name="PolygonToolButton" type="Button" parent="Panel"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 118.0
+offset_right = 86.0
+offset_bottom = 186.0
+icon = ExtResource("3_v4p47")
+
+[node name="PathToolButton" type="Button" parent="Panel"]
+visible = false
+layout_mode = 0
+offset_left = 13.0
+offset_top = 212.0
+offset_right = 93.0
+offset_bottom = 297.0
+icon = ExtResource("4_nwuyi")
+expand_icon = true
+
+[node name="RectangleToolButton" type="Button" parent="Panel"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 231.0
+offset_right = 95.0
+offset_bottom = 315.0
+icon = ExtResource("5_ci534")
+expand_icon = true
+
+[node name="WallToolButton" type="Button" parent="Panel"]
+layout_mode = 0
+offset_left = 19.0
+offset_top = 344.0
+offset_right = 96.0
+offset_bottom = 420.0
+icon = ExtResource("6_a6dyj")
+
+[node name="DoorToolButton" type="Button" parent="Panel"]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 456.0
+offset_right = 93.0
+offset_bottom = 525.0
+icon = ExtResource("7_fqona")
+expand_icon = true
+
+[node name="BridgeToolButton" type="Button" parent="Panel"]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 553.0
+offset_right = 90.0
+offset_bottom = 623.0
+icon = ExtResource("8_3uihm")
+
+[node name="LogTextEdit" type="TextEdit" parent="."]
+visible = false
+layout_mode = 1
+offset_left = 654.0
+offset_top = 2.0
+offset_right = 1135.0
+offset_bottom = 641.0
+theme_override_constants/line_spacing = 20
+theme_override_font_sizes/font_size = 30
+text = "                 Messages"
+wrap_mode = 1
+autowrap_mode = 1
+scroll_smooth = true
+minimap_width = 0
+caret_type = 1
+caret_blink = true
+caret_move_on_right_click = false
+highlight_current_line = true
+draw_control_chars = true
+text_direction = 3
+
+[connection signal="pressed" from="Panel/StairToolButton" to="." method="_on_stair_tool_button_pressed"]
+[connection signal="pressed" from="Panel/PolygonToolButton" to="." method="_on_polygon_tool_button_pressed"]
+[connection signal="pressed" from="Panel/PathToolButton" to="." method="_on_path_tool_button_pressed"]
