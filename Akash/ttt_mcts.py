@@ -158,5 +158,4 @@ class MCTS():
                 best_moves.append(child_node)
             
         # return one of the best moves randomly
-        return random.choice(best_moves)
-    
+        return random.choice(best_moves

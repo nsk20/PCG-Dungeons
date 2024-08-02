@@ -348,6 +348,7 @@ def parse_tiles(tile):
     """
     Return objects occupying a tile on the board other than the player.
     """
+    tile = remove_spaces(tile)
     objs = []
     for code in tile:
       # 
@@ -382,14 +383,42 @@ def remove_player_from(tile):
    """
    Needed when tile has Trap, Portal B or just the Floor
    Remember Tile Convention
+   Possible Tiles: "@  ", "@+J", "@JT", "@JB", "@+T", "@+B"
    """
    occupants = parse_tiles(tile)
    if occupants[-1] == "Trap":
       return TRAP
    elif occupants[-1] == "Portal":
       return PORTAL_B
-   elif occupants[-1] == "Javelin":
+   elif occupants[-1] == "Javelin" or occupants[-1] == "Hero":
       return FLOOR
+
+def remove_npc_from(tile):
+   """
+   NPC can be combinations of javelin and items.
+   """
+   occupants = parse_tiles(tile)
+   
+   if len(occupants) > 2:
+      return REVERSE_BOARD_LOOKUP[occupants[1]] + "+" + REVERSE_BOARD_LOOKUP[occupants[2]]
+   elif len(occupants) == 2:
+      return CODE_TO_TILE[REVERSE_BOARD_LOOKUP[occupants[-1]]]
+   elif len(occupants) == 1 and (occupants[0] in MONSTER_LIST):
+      return FLOOR
+
+def add_npc_to_(code, tile):
+   """
+   Add NPC to tile: possible sizes of tiles -> (2, 1)
+   """
+   occupants = parse_tiles(tile)
+   if len(occupants) == 2:
+      return code + REVERSE_BOARD_LOOKUP[occupants[0]] +  REVERSE_BOARD_LOOKUP[occupants[1]]
+   elif len(occupants) == 1:
+      return code + "+" + REVERSE_BOARD_LOOKUP[occupants[0]]
+
+
+def remove_spaces(input_string):
+    return [char for char in input_string if char != ' ']
 
 ### Possible Tiles other than the players(with or w/o javelin)
 # 1. Wall (eliminated by validation_move)
@@ -411,7 +440,107 @@ def remove_player_from(tile):
 #   make it dissapear for a while.
 
 """
+print(remove_player_from("@  "))
 print(remove_player_from("@+B")+"**")
+print(remove_player_from("@+T")+"**")
 print(remove_player_from("@JT")+"**")
 print(remove_player_from("@+J")+"**")
+print(remove_player_from("@JB")+"**")
+print(remove_spaces(".  "))
+print(parse_tiles(".  "))
+print(BOARD_LOOKUP["."])
+print(parse_tiles("@+J"))
+print(parse_tiles("@JB"))
+print(parse_tiles("@JT"))
+print(remove_npc_from("g+T"))
+print(remove_npc_from("wJP"))
+print(remove_npc_from("b  "))
+print(remove_npc_from("o+J"))
 """
+
+#(test_object_dict, test_char_dict, test_npc_order, test_exit) = map_board(board_1)
+
+def collide_treasure(new_x, new_y, mov_name, mov_idx="", col_idx=""):
+    """
+    Handling collions of Player and Ogres with Treasure:
+    When collided with by either the hero or ogres, they are consumed and may not be re-used.
+    """
+    # Get the moving character and its tile
+    print(f"{board_1[8][5]} -> {board_1[8][4]}")
+    print("After moving to Treasure---->")
+    
+    mov_char = test_char_dict[mov_name + mov_idx]
+    mov_tile = board_1[mov_char.x][mov_char.y]
+    # Get the colliding item
+    col_treasure = test_object_dict["Treasure" + col_idx]
+
+    if mov_char.name == "Hero":
+      # Player consumes the treasue: remove from item list
+      mov_char.treasure += col_treasure.treasure_gain      
+      test_object_dict.pop("Treasure" + col_idx)
+      
+      # Assuming Player hasn't moved into the location already to pick up the javelin
+      if not(new_x == mov_char.x and new_y == mov_char.y):
+        board_1[mov_char.x][mov_char.y] = remove_player_from(mov_tile) 
+        # Update Hero, Javelin Location
+        test_char_dict['Hero'].update_location(new_x, new_y)
+        # Update Javelins Location
+        if mov_char.has_javelin:
+          board_1[new_x][new_y] = "@+J"
+          test_object_dict["Javelin"].update_location(new_x, new_y)
+        else:
+          board_1[new_x][new_y] = "@  "
+      # When player is in the current tile to pick up the javelin.
+      else:
+        board_1[new_x][new_y] = "@+J"
+    
+    # Need to complete implementation for Ogre
+    elif mov_char.name == "Ogre":
+      test_object_dict.pop("Ogre" + str(col_idx))
+    
+    print(f"{board_1[8][5]} -> {board_1[8][4]}")
+
+def jav_pickup(new_x, new_y, mov_name, mov_idx="", col_idx=""):
+    print("Before picking up Javelin---->")
+    print(f"{board_1[8][5]} -> {board_1[8][4]}")
+    print("After picking up Javelin ---->")
+    if mov_name == "Hero":
+        mov_char = test_char_dict[mov_name + mov_idx]
+        mov_char.has_javelin = True
+        mov_tile = board_1[mov_char.x][mov_char.y]
+        board_1[mov_char.x][mov_char.y] = remove_player_from(mov_tile) 
+        occupants = parse_tiles(board_1[new_x][new_y])
+        item = ""
+        # Update Javelin tile with the player and other items if any
+        if "Javelin" in occupants and len(occupants) >= 2:
+            item = occupants[-1]
+            board_1[new_x][new_y] = "@J" + REVERSE_BOARD_LOOKUP[item]
+        else:
+            board_1[new_x][new_y] = "@+J"
+        
+        # Update Player Location
+        mov_char.update_location(new_x, new_y)
+    
+
+
+"""print("Test 1 \n")
+board_1[1][4] = ".  "
+board_1[3][7] = "@+J"
+(test_object_dict, test_char_dict, test_npc_order, test_exit) = map_board(board_1)
+collide_potion(board_1, 3, 8, "Hero", col_idx="1")
+"""
+
+(test_object_dict, test_char_dict, test_npc_order, test_exit) = map_board(board_1)
+board_1[1][4] = ".  "
+board_1[8][5] = "@+J"
+board_1[8][4] = "G  "
+#test_char_dict["Hero"].has_javelin = False
+test_char_dict["Hero"].update_location(8, 5)
+test_object_dict["Javelin"].update_location(8, 5)
+#jav_pickup(8, 4, "Hero")
+#collide_treasure(8, 4, "Hero", col_idx="1")
+
+["g", "w", "b", "o", "M"]
+print(add_npc_to_("g", "T  "))
+print(add_npc_to_("w", "J+P"))
+

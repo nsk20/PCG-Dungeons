@@ -5,9 +5,10 @@ HEIGHT = 20
 WALL = "#  "   
 FLOOR = ".  " # may contain hero, NPCs, gameplay objects or nothing at all.
 
-#Player
+#Player and Javelin
 PLAYER = "@  "
 PLAYER_HP = 10 # All characters have Hit Points (HP) and may deal damage; player starts with 10 HP.
+JAVELIN = "J  "
 JAVELIN_DAMAGE = 1
 
 # Gameplay Objects: treasures, potions, portals, traps, and the exit of the level.
@@ -40,8 +41,14 @@ BOARD_LOOKUP = {"P":"Potion", "G":"Treasure", "A":"Portal", "B":"Portal", "T":"T
                 "J": "Javelin", "g": "Goblin", "w":"Wizard", "b":"Blob", "o":"Ogre", "M":"Minotaur",
                 "@": "Hero", ".": "Floor"}
 
-REVERSE_BOARD_LOOKUP = []
+REVERSE_BOARD_LOOKUP = {"Potion":"P", "Treasure":"G", "Portal":"A", "Portal":"B", "Trap":"T", 
+                        "Exit":"E", "Javelin":"J", "Goblin":"g", "Wizard":"w", "Blob":"b", "Ogre":"o",
+                        "Minotaur":"M", "Hero":"@", "Floor":"."}
+
 MONSTER_LIST = ["Goblin", "Wizard", "Blob", "Ogre", "Minotaur"]
 OBJECT_LIST = ["Potion", "Treasure", "Portal", "Trap", "Exit", "Javelin"]
 MONSTER_CODE = ["g", "w", "b", "o", "M"]
 OBJECT_CODE = ["P", "G", "A", "B", "T", "E"]
+CODE_TO_TILE = {"P": POTION, "G": TREASURE, "A":PORTAL_A, "B":PORTAL_B, "T":TRAP, "E":EXIT,
+                "g": GOBLIN, "w":WIZARD, "b":BLOB, "o":OGRE, "M":MINOTAUR, ".":FLOOR, "J":JAVELIN,
+                "@":PLAYER}

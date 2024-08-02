@@ -1,0 +1,4 @@
+res://2D Dungeon/scenes/MainScene.tscn
+res://2D Dungeon/scenes/Dungeon.tscn
+res://2D Dungeon/scenes/NewMainScene.tscn
+res://2D Dungeon/scripts/MCTSAdventurer.gd

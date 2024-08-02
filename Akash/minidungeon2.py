@@ -31,20 +31,10 @@ class Board:
     
     return 0 <= new_x < WIDTH and 0 <= new_y < HEIGHT and board[new_y][new_x] != WALL
 
-  def move_to_floor(self, cur_tile, char_name, char_idx=0):
-    character = self.char_dict[char_name]
-    (new_x, new_y) = (character.x, character.y)
-    new_tile = self.board[new_x][new_y]
-    # Case for empty floor
-    if new_tile == FLOOR:
-      if character.name == "Hero":
-        pass
-      else:
-        pass
-    # Case for non-empty floor
-    else:
-      pass
-
+  # Collide Function Template: 
+  # Input: (character_name, character_index) -> Character Location, tile on which it resides
+  #        (collision_char_index) -> Collision Character Location
+  # Body: 
 
   def move_player(self, new_x, new_y):
     """
@@ -57,114 +47,199 @@ class Board:
     tile_occupants = parse_tiles(new_tile)
     # Check if one of them is a monster
     monster = monster_present(tile_occupants)
-    cur_tile = self.board[player.x][player.y]
-    cur_tile_wo_player = remove_player_from(cur_tile) # with the player removed
-    # Case when player has javelin: next tiles could be objects/characters or a combination of them
-    if player.has_javelin:
-
-      # Case for moving to an empty floor tile 
-      if new_tile == FLOOR:
-        # switch floor tile with player along with his javelin
-        self.board[new_x][new_y] == "@+J"
-        self.board[player.x][player.y] = cur_tile_wo_player
-        self.javelin.update_location(new_x, new_y)
-
-      # Case for collision: Implement case when player collides with other objects
-      else:
-        #Trigger Collisions with the ONLY monster without moving from the current tile.
-        if monster:
-          index = lookup_index(self.object_dict, self.monster_dict, monster, new_x, new_y)
-          # call collision function for monsters which won't move the player
-          self.COL_FUNC_LOOKUP[monster]("Hero", col_idx=index)
-        # Trigger Collision and move into the new tile w/o Monster
-        else:
-          # Since the player has javelin; only possible tiles are with items/objects
-          for name in tile_occupants:
-            index = lookup_index(self.object_dict, self.monster_dict, name, new_x, new_y)
-            # call collision function need to figure out when to call it
-            self.COL_FUNC_LOOKUP[name]("Hero", index)
-            #update player and javelin location to be updated in the lookup function
-            #self.board[new_x][new_y] == "@+J"
-            #self.board[self.player.x][self.player.y] = cur_tile_wo_player
-            #self.javelin.update_location(new_x, new_y)
-
-    # Case when player does not have javelin: new tiles could be mixed with Javelin
+    
+    if new_tile == FLOOR:
+      self.move_to_floor(new_x, new_y, "Hero")
+    # Case for collision: Implement case when player collides with other objects
+    elif monster:  
+      #Trigger Collisions with the ONLY monster without moving from the current tile.
+      index = lookup_index(self.object_dict, self.char_dict, monster, new_x, new_y)
+      self.COL_FUNC_LOOKUP[monster](new_x, new_y, "Hero", col_idx=str(index))
+      # Trigger Collision and move into the new tile with items
     else:
-      # Empty Floor Tile
-      if new_tile == FLOOR:
-        # swith floor tile with player w/o javelin with floor tile
-        self.board[new_x][new_y] == "@  "
-        self.board[self.player.x][self.player.y] = cur_tile_wo_player
-      # Floor tile has Javelin and player acquires it by moving onto it.
-      elif new_tile == ".+J":
-        self.player.has_javelin = True
-        self.board[new_x][new_y] == "@+J"
-        self.board[self.player.x][self.player.y] = cur_tile_wo_player
-        
-      # Collision with objects or monsters: case with just objects and objects+javelin.
-      else:
-        if monster:
-          index = lookup_index(self.object_dict, self.monster_dict, monster, new_x, new_y)
-          self.COL_FUNC_LOOKUP[monster](self.player, index)
-        else:
-          for name in tile_occupants:
-            index = lookup_index(self.object_dict, self.monster_dict, name, new_x, new_y)
-            self.COL_FUNC_LOOKUP[name](self.player, index)
-            #update player and javelin location
-            self.board[new_x][new_y] == "@+J"
-            self.board[self.player.x][self.player.y] = cur_tile_wo_player
+      # Separate calls when javelin mixed with items as both move player
+      for name in tile_occupants:
+
+        index = lookup_index(self.object_dict, self.char_dict, name, new_x, new_y)
+        # call collision function need to figure out when to call it
+        self.COL_FUNC_LOOKUP[name](new_x, new_y, "Hero", col_index=str(index))
             
   
-  """
-  Goblin
-  Wizard
-  Ogre
-  Blob
-  Minotaur
-  """
+  def move_to_floor(self, new_x, new_y, mov_name, mov_idx="", col_idx=0):
+    """
+    All characters passed as arguments make a move in this EMPTY floor.
+    """
+    # Figure out the character moving into the tile
+    mov_char = self.char_dict[mov_name + mov_idx]
+    # Tile of the moving agent
+    mov_tile = self.board[mov_char.x][mov_char.y]
+    
+    # Character -> Player
+    if mov_char.name == "Hero":
+      self.board[mov_char.x][mov_char.y] = remove_player_from(mov_tile) 
+      self.char_dict['Hero'].update_location(new_x, new_y)
+      if mov_char.has_javelin:
+        self.board[new_x][new_y] = "@+J"
+        self.object_dict["Javelin"].update_location(new_x, new_y)
+      else:
+        self.board[new_x][new_y] = "@  "
+    
+    # Character -> Monster 
+    # Implement as we move NPC
+    else:
+      pass
 
-  def collide_potion(self, mov_char, mov_idx=0, col_idx=0):
+  def collide_potion(self, new_x, new_y, mov_name, mov_idx="", col_idx=""):
     """
     Handling collions of Player and Blob with Potions:
     - Potions are used to increase the HP of the hero by 1, up to the maximum of 10. 
     - When collided with by either the hero or blobs, they are consumed and may not be re-used.
     """
+    # Get the moving character and its tile
+    mov_char = self.char_dict[mov_name + mov_idx]
+    mov_tile = self.board[mov_char.x][mov_char.y]
+    # Get the colliding item
     col_potion = self.object_dict["Potion" + str(col_idx)]
-    (new_x, new_y) = (col_potion.x, col_potion.y)
 
-    #self.board[new_x][new_y] == "@+J"
-    #self.board[self.player.x][self.player.y] = cur_tile_wo_player
-    #self.javelin.update_location(new_x, new_y)
-    # Moving Character = Player/Hero
-    if mov_char == "Hero":
-      player = self.char_dict["Hero"]
-      cur_tile = self.board[player.x][player.y]
-      if player.hp != player.max_hp:
-          player.hp += col_potion.potion_gain
-          # Remove after testing
-          print(f"Player found a potion! at ({col_potion.x}, {col_potion.y})")
+    if mov_char.name == "Hero":
+      # Change healt of Player
+      if mov_char.hp != mov_char.max_hp:
+          mov_char.hp += col_potion.potion_gain      
           self.object_dict.pop("Potion" + str(col_idx))
-          print(f"Potion Consumed!")
-    elif mov_char == "Blob":
-      print(f"Blob found a potion! at ({col_potion.x}, {col_potion.y})")
-      self.object_dict.pop("Potion" + str(col_idx))
-      print(f"Potion Consumed!")
+      
+      # Assuming Player hasn't moved into the location already to pick up the javelin
+      if not(new_x == mov_char.x and new_y == mov_char.y):
+        self.board[mov_char.x][mov_char.y] = remove_player_from(mov_tile) 
+        # Update Hero, Javelin Location
+        mov_char.update_location(new_x, new_y)
+        # Update Javelins Location
+        if mov_char.has_javelin:
+          self.board[new_x][new_y] = "@+J"
+          self.object_dict["Javelin"].update_location(new_x, new_y)
+        else:
+          self.board[new_x][new_y] = "@  "
+      # Player in current tile to pick up the javelin; Previous tile already updated.
+      else:
+        self.board[mov_char.x][mov_char.y] = "@+J"
+
+    # Need to complete implementation for Blob
+    elif mov_char.name == "Blob":
+      # Consume Potion and update blobs location and new tile
+      self.object_dict.pop("Potion" + col_idx)
+      mov_char.update_location(new_x, new_y)
+      self.board[new_x][new_y] = add_npc_to_("b", self.board[new_x][new_y])
+      # Update previous tile
+      self.board[mov_char.x][mov_char.y] = remove_npc_from(mov_tile) 
+      
     
-  def collide_treasure(self, mov_char, mov_idx=0, col_idx=0):
+  def collide_treasure(self, new_x, new_y, mov_name, mov_idx="", col_idx=""):
     """
     Handling collions of Player and Ogres with Treasure:
     When collided with by either the hero or ogres, they are consumed and may not be re-used.
     """
-    col_treasure = self.object_dict["Potion" + str(col_idx)]
-    if mov_char == "Hero":
-      self.player.treasure += col_treasure.treasure_gain
-      print(f"Player found a Treasure! at ({col_treasure.x}, {col_treasure.y})")
-      self.object_dict.pop("Treasure" + str(col_idx))
-      print(f"Treasure Consumed!")
-    elif mov_char == "ogre":
-      print(f"Ogre found a Treasure! at ({col_treasure.x}, {col_treasure.y})")
-      self.object_dict.pop("Treasure" + str(col_idx))
-      print(f"Ogre consumed Treasure!")
+    # Get the moving character and its tile
+    mov_char = self.char_dict[mov_name + mov_idx]
+    mov_tile = self.board[mov_char.x][mov_char.y]
+    # Get the colliding item
+    col_treasure = self.object_dict["Treasure" + col_idx]
+
+    if mov_char.name == "Hero":
+      # Player consumes the treasue: remove from item list
+      mov_char.treasure += col_treasure.treasure_gain      
+      self.object_dict.pop("Treasure" + col_idx)
+      
+      # Assuming Player hasn't moved into the location already to pick up the javelin
+      if not(new_x == mov_char.x and new_y == mov_char.y):
+        self.board[mov_char.x][mov_char.y] = remove_player_from(mov_tile) 
+        # Update Hero, Javelin Location
+        mov_char.update_location(new_x, new_y)
+        # Update Javelins Location
+        if mov_char.has_javelin:
+          self.board[new_x][new_y] = "@+J"
+          self.object_dict["Javelin"].update_location(new_x, new_y)
+        else:
+          self.board[new_x][new_y] = "@  "
+      # When player is in the current tile to pick up the javelin.
+      else:
+        self.board[new_x][new_y] = "@+J"
+
+    # Consume Treasure and move Orgre
+    elif mov_char.name == "Ogre":
+      # Consume Treasure and update Ogres location and new tile
+      self.object_dict.pop("Treasure" + col_idx)
+      mov_char.update_location(new_x, new_y)
+      self.board[new_x][new_y] = add_npc_to_("o", self.board[new_x][new_y])
+      # Update previous tile
+      self.board[mov_char.x][mov_char.y] = remove_npc_from(mov_tile) 
+
+  def collide_portal(self, new_x, new_y, mov_name, mov_idx="", col_idx=""):
+    pass
+
+  def collide_trap(self, new_x, new_y, mov_name, mov_idx="", col_idx=""):
+    """
+    # Traps deal 1 damage to any game character moving through them, every time.
+    """
+    # Get the moving character and its tile
+    mov_char = self.char_dict[mov_name + mov_idx]
+    mov_tile = self.board[mov_char.x][mov_char.y]
+    # Get the colliding item
+    col_trap = self.object_dict["Trap" + col_idx]
+
+    if mov_char.name == "Hero":
+      # Decrease Health of player
+      mov_char.hp -= 1
+  
+      # Assuming Player hasn't moved into the location already to pick up the javelin
+      if not(new_x == mov_char.x and new_y == mov_char.y):
+        self.board[mov_char.x][mov_char.y] = remove_player_from(mov_tile) 
+        # Update Hero, Javelin Location
+        mov_char.update_location(new_x, new_y)
+        # Update Javelins Location
+        if mov_char.has_javelin:
+          self.board[new_x][new_y] = "@JT"
+          self.object_dict["Javelin"].update_location(new_x, new_y)
+        else:
+          self.board[new_x][new_y] = "@+T"
+      # When player is in the current tile to pick up the javelin.
+      else:
+        self.board[new_x][new_y] = "@JT"
+    
+    # All NPC would be affected from a trap
+    else:
+      mov_char.hp -= 1
+      # If NPC is deap, remove from list
+      if mov_char.hp <= 0:
+        self.char_dict.pop(mov_char.name + mov_idx)
+      
+      # NEEDS update!!
+      # Consume Treasure and update Ogres location and new tile
+      self.object_dict.pop("Treasure" + col_idx)
+      mov_char.update_location(new_x, new_y)
+      self.board[new_x][new_y] = add_npc_to_(REVERSE_BOARD_LOOKUP[mov_char.name], 
+                                             self.board[new_x][new_y])
+      # Update previous tile
+      self.board[mov_char.x][mov_char.y] = remove_npc_from(mov_tile) 
+
+  def collide_exit(self, new_x, new_y, mov_name, mov_idx="", col_idx=""):
+    pass
+
+  def jav_pickup(self, new_x, new_y, mov_name, mov_idx="", col_idx=""):
+    # Only player allow to pick up the javelin
+    if mov_name == "Hero":
+        self.player.has_javelin = True
+        mov_tile = self.board[self.player.x][self.player.y]
+        self.board[self.player.x][self.player.y] = remove_player_from(mov_tile) 
+        occupants = parse_tiles(self.board[new_x][new_y])
+        item = ""
+        # Update Javelin tile with the player and other items if any
+        if "Javelin" in occupants and len(occupants) >= 2:
+            item = occupants[-1]
+            self.board[new_x][new_y] = "@J" + REVERSE_BOARD_LOOKUP[item]
+        else:
+            self.board[new_x][new_y] = "@+J"
+        
+        # Update Player Location
+        self.player.update_location(new_x, new_y)
 
   # Have to split this method into functions
   def handle_collision_player(self, mov_char, col_object):
@@ -173,19 +248,11 @@ class Board:
     """
     # Moving Character = Player/Hero
     if mov_char.name == "Hero":
-      if col_object.name == "treasure":
-        # Treasures are used to increase the treasure score of the hero. 
-        # When collided with by either the hero or ogres, they are consumed and may not be re-used.
-        print("Found a treasure!")
-
-      elif col_object == PORTAL_A:
+      if col_object == PORTAL_A:
         # Portals come in pairs. If the hero collides with a portal, they are immediately (on the same
         #  turn) transported to the other paired portal.
         print("Entered portal!")
 
-      elif col_object == TRAP:
-        # Traps deal 1 damage to any game character moving through them, every time.
-        print("Stepped on a trap!")
       # NPC collisions (goblins, wizards, blobs, ogres, minotaurs)
       elif col_object == 'Goblins':
         #  They have 1 HP and deal 1 damage upon collision.
@@ -204,6 +271,14 @@ class Board:
         print("Ogres!")
       elif col_object == 'Minotaurs':
           print("Minotaurs!")
+
+  """
+  Goblin
+  Wizard
+  Ogre
+  Blob
+  Minotaur
+  """
 
   def move_npc(board, x, y, npc_type):
     """
@@ -259,20 +334,8 @@ class Board:
                             "Blob": self.collide_blob, "Ogre": self.collide_ogre, 
                             "Minotaur": self.collide_minotaur}
         
-  def collide_portal(self, mov_char, portal_idx):
-    pass
-
-  def collide_trap(self, mov_char, trap_idx):
-    pass
-
-  def collide_exit(self, mov_char, exit_idx):
-    pass
-
-  def jav_pickup(self, mov_char, trap_idx):
-    # Implement javelin pickup
-    self.player.has_javelin = True
-    #self.board[new_x][new_y] == "@+J"
-    #self.board[self.player.x][self.player.y] = cur_tile_wo_player
+  
+  
 
   def collide_goblin(self, mov_char, trap_idx):
     pass

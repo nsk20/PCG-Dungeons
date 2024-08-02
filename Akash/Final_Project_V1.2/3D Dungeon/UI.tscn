@@ -1,0 +1,88 @@
+[gd_scene format=3 uid="uid://37ei0f61c2c5"]
+
+[node name="UI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 0
+offset_left = 64.0
+offset_top = 18.0
+offset_right = 502.0
+offset_bottom = 572.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 70.0
+offset_top = 27.0
+offset_right = 494.0
+offset_bottom = 548.0
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Survival Chance Input
+"
+
+[node name="SurvivalChanceInput" type="SpinBox" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Border Size
+"
+
+[node name="BorderSizeInput" type="SpinBox" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Label3" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Room Number"
+
+[node name="RoomNumberInput" type="SpinBox" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Label4" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Room Margin"
+
+[node name="RoomMarginInput" type="SpinBox" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Label5" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Room Recursion"
+
+[node name="RoomRecursionInput" type="SpinBox" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Label6" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Minimum Room Size
+"
+
+[node name="MinRoomSizeInput" type="SpinBox" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Label7" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Maximum Room Size"
+
+[node name="MaxRoomSizeInput" type="SpinBox" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="CustomSeedInput" type="LineEdit" parent="VBoxContainer"]
+layout_mode = 2
+placeholder_text = "Custom Seed Input"
+
+[node name="StartButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Generate
+"
+
+[node name="HomeButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Home"

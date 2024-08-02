@@ -14,34 +14,32 @@ class Character:
         self.y = y
     
     def __str__(self) -> str:
-        return f"Name: {self.name} \nLocation: ({self.x}, {self.y})"
+        return f"Name: {self.name} \nLocation: ({self.x}, {self.y} \nHP: {self.hp})"
     
-    """
-    def move(self, dx, dy, game):
-        new_x = self.x + dx
-        new_y = self.y + dy
-        if 0 <= new_x < game.width and 0 <= new_y < game.height:
-            if game.map[new_y][new_x].type != 'wall':
-                self.x = new_x
-                self.y = new_y
-                return True
-        return False
-    """
+    def update_location(self, new_x, new_y):
+        self.x = new_x
+        self.y = new_y
+        
+
 
 class Hero(Character):
-    def __init__(self, name, hp, damage, x, y):
-        super().__init__(name, hp, damage, x, y)
-        self.treasure = 0
-        self.has_javelin = True
-
     """The player is given one re-usable javelin at the start of every level. The player may choose to 
     throw this javelin and do 1 damage to any monster within their unbroken line of sight. After using 
     the javelin, the hero must traverse to the tile to which it was thrown in order to pick it up and 
     use it again. 
     """
+
+    def __init__(self, name, hp, damage, x, y):
+        super().__init__(name, hp, damage, x, y)
+        self.treasure = 0
+        self.has_javelin = True
+
     def throw_javelin(self, game):
         # Implementation for javelin throwing
         pass
+    def __str__(self) -> str:
+        return super().__str__() + f"\nTreasure = {self.treasure} \nHas Javelin = {self.has_javelin}"
+
 
 """
 class Monster(Character):
