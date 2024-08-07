@@ -1,0 +1,64 @@
+[gd_scene load_steps=4 format=3 uid="uid://brsm7v84dhlng"]
+
+[ext_resource type="Script" path="res://selection_scene.gd" id="1_4l5cd"]
+[ext_resource type="Texture2D" uid="uid://d18r5bpf4ybgv" path="res://2D Dungeon/assets/Background5.png" id="2_hhl65"]
+[ext_resource type="FontFile" uid="uid://d3nldl4bsk1am" path="res://2D Dungeon/assets/Germania Shadow.ttf" id="3_0fbj7"]
+
+[node name="CanvasLayer" type="CanvasLayer"]
+script = ExtResource("1_4l5cd")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_hhl65")
+stretch_mode = 6
+
+[node name="Button" type="Button" parent="."]
+anchors_preset = -1
+anchor_left = 0.155
+anchor_top = 0.173
+anchor_right = 0.374
+anchor_bottom = 0.565
+offset_left = 0.439999
+offset_top = -0.104005
+offset_right = 0.151985
+offset_bottom = -0.119998
+mouse_default_cursor_shape = 2
+theme_type_variation = &"FlatButton"
+theme_override_colors/font_color = Color(0.976471, 0.976471, 0.976471, 1)
+theme_override_colors/font_pressed_color = Color(0.0666667, 0.145098, 0.215686, 1)
+theme_override_colors/font_hover_color = Color(0.0862745, 0.145098, 0.207843, 1)
+theme_override_constants/outline_size = 15
+theme_override_constants/icon_max_width = 15
+theme_override_fonts/font = ExtResource("3_0fbj7")
+theme_override_font_sizes/font_size = 75
+text = "2D
+Game"
+
+[node name="Button2" type="Button" parent="."]
+anchors_preset = -1
+anchor_left = 0.628
+anchor_top = 0.179
+anchor_right = 0.807
+anchor_bottom = 0.552
+offset_left = 0.543976
+offset_top = 0.00799668
+offset_right = 14.336
+offset_bottom = 0.30397
+mouse_default_cursor_shape = 2
+theme_type_variation = &"FlatButton"
+theme_override_colors/font_color = Color(0.976471, 0.976471, 0.976471, 1)
+theme_override_colors/font_pressed_color = Color(0.00784314, 0.32549, 0.552941, 1)
+theme_override_colors/font_hover_color = Color(0.12549, 0.168627, 0.219608, 1)
+theme_override_constants/outline_size = 15
+theme_override_constants/icon_max_width = 15
+theme_override_fonts/font = ExtResource("3_0fbj7")
+theme_override_font_sizes/font_size = 75
+text = "3D
+Game"
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="Button2" to="." method="_on_button_2_pressed"]

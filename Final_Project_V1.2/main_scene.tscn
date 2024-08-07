@@ -1,0 +1,65 @@
+[gd_scene load_steps=7 format=3 uid="uid://700s0c3u3ldn"]
+
+[ext_resource type="Script" path="res://main_scene.gd" id="1_twi03"]
+[ext_resource type="Texture2D" uid="uid://d32575741l156" path="res://2D Dungeon/assets/Background1.jpg" id="2_2w7fc"]
+[ext_resource type="FontFile" uid="uid://dlt6jxq42xj25" path="res://2D Dungeon/assets/Sho-CardCapsNF.ttf" id="3_rrupf"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_32u4s"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ml1oo"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_meaae"]
+
+[node name="CanvasLayer" type="CanvasLayer"]
+script = ExtResource("1_twi03")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -2.0
+offset_right = -2.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_2w7fc")
+stretch_mode = 6
+
+[node name="Label" type="Label" parent="."]
+offset_left = 341.0
+offset_top = 260.0
+offset_right = 809.0
+offset_bottom = 469.0
+theme_override_font_sizes/font_size = 75
+text = "
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button" type="Button" parent="."]
+material = SubResource("ShaderMaterial_32u4s")
+anchors_preset = -1
+anchor_left = 0.356
+anchor_top = 0.138
+anchor_right = 0.622
+anchor_bottom = 0.46
+offset_left = -0.112007
+offset_top = 2.57599
+offset_right = -0.544044
+offset_bottom = -0.0800054
+grow_horizontal = 2
+grow_vertical = 2
+mouse_default_cursor_shape = 2
+theme_type_variation = &"FlatButton"
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0.717647, 0.576471, 0.988235, 1)
+theme_override_colors/font_hover_color = Color(0.647059, 0.458824, 0.964706, 1)
+theme_override_constants/outline_size = 45
+theme_override_constants/icon_max_width = 45
+theme_override_fonts/font = ExtResource("3_rrupf")
+theme_override_font_sizes/font_size = 75
+theme_override_styles/normal = SubResource("StyleBoxTexture_ml1oo")
+theme_override_styles/focus = SubResource("StyleBoxTexture_meaae")
+text = "START 
+GAME"
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

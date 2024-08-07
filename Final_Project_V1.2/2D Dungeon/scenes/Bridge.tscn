@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bmqidwb0olvoa"]
+
+[ext_resource type="Script" path="res://2D Dungeon/scripts/Bridge.gd" id="1_o2eav"]
+
+[node name="Bridge" type="Node2D"]
+script = ExtResource("1_o2eav")

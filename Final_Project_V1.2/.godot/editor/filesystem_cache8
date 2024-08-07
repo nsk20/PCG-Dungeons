@@ -1,0 +1,99 @@
+ea4bc82a6ad023ab7ee23ee620429895
+::res://::1722475336
+icon.svg::CompressedTexture2D::7485800293752508373::1722471442::1722475338::1::::<><>::
+main_scene.gd::GDScript::-1::1722471443::0::1::::<>CanvasLayer<>::
+main_scene.tscn::PackedScene::2299203826851374783::1722471443::0::1::::<><>::res://main_scene.gd<>uid://d32575741l156::::res://2D Dungeon/assets/Background1.jpg<>uid://dlt6jxq42xj25::::res://2D Dungeon/assets/Sho-CardCapsNF.ttf
+selection_scene.gd::GDScript::-1::1722471443::0::1::::<>CanvasLayer<>::
+selection_scene.tscn::PackedScene::3617576729721705140::1722471443::0::1::::<><>::res://selection_scene.gd<>uid://d18r5bpf4ybgv::::res://2D Dungeon/assets/Background5.png<>uid://d3nldl4bsk1am::::res://2D Dungeon/assets/Germania Shadow.ttf
+::res://2D Dungeon/::1722471442
+export_presets.cfg::TextFile::-1::1722471442::0::1::::<><>::
+::res://2D Dungeon/assets/::1722471442
+Background1.jpg::CompressedTexture2D::9182168153978855579::1722471442::1722475340::1::::<><>::
+Background2.jpg::CompressedTexture2D::1961974234098410864::1722471442::1722475339::1::::<><>::
+Background3.png::CompressedTexture2D::8340219782287687488::1722471442::1722475339::1::::<><>::
+Background4.png::CompressedTexture2D::506381361394677434::1722471442::1722475339::1::::<><>::
+Background5.png::CompressedTexture2D::9053382290208586453::1722471442::1722475339::1::::<><>::
+Background_image.jpg::CompressedTexture2D::8060158577376140770::1722471442::1722475340::1::::<><>::
+Bridge.png::CompressedTexture2D::8110524228823354881::1722471442::1722475339::1::::<><>::
+CAVEMAN_.TTF::FontFile::4366986292452906570::1722471442::1722475338::1::::<><>::
+Door Tool.png::CompressedTexture2D::1575903450494388531::1722471442::1722475339::1::::<><>::
+Germania Shadow.ttf::FontFile::9152060450675225028::1722471442::1722475338::1::::<><>::
+home-button.svg::CompressedTexture2D::213491848383019711::1722471442::1722475340::1::::<><>::
+Home.png::CompressedTexture2D::4997892506272116262::1722471442::1722475339::1::::<><>::
+Path Tool.png::CompressedTexture2D::2091503756107089745::1722471442::1722475339::1::::<><>::
+Point1.png::CompressedTexture2D::2357673532372003041::1722471442::1722475339::1::::<><>::
+Point2.png::CompressedTexture2D::6729203602707776198::1722471442::1722475339::1::::<><>::
+Point.png::CompressedTexture2D::1532357698667705751::1722471442::1722475340::1::::<><>::
+Polygon Tool.png::CompressedTexture2D::2677333916311028760::1722471442::1722475340::1::::<><>::
+Rectangle Tool.png::CompressedTexture2D::6372224230495347722::1722471442::1722475340::1::::<><>::
+Regular Polygon Tool.png::CompressedTexture2D::6154554587484811101::1722471442::1722475340::1::::<><>::
+Select Tool.png::CompressedTexture2D::5266881703278091479::1722471442::1722475338::1::::<><>::
+Sho-CardCapsNF.ttf::FontFile::7972462041454247264::1722471442::1722475338::1::::<><>::
+Stairs Tool.png::CompressedTexture2D::7622695823865577409::1722471442::1722475338::1::::<><>::
+Wall Tool.png::CompressedTexture2D::28477620875829178::1722471442::1722475338::1::::<><>::
+::res://2D Dungeon/scenes/::1722471442
+Bridge.tscn::PackedScene::3262209102951851464::1722471442::0::1::::<><>::res://2D Dungeon/scripts/Bridge.gd
+Door.tscn::PackedScene::5651645823082983818::1722471442::0::1::::<><>::res://2D Dungeon/scripts/Door.gd
+Dungeon.tscn::PackedScene::2136018805214594410::1722471442::0::1::::<><>::res://2D Dungeon/scripts/Dungeon.gd<>res://2D Dungeon/scripts/TopoMap.gd<>res://2D Dungeon/scripts/Corridors.gd<>res://2D Dungeon/scripts/Zones.gd<>res://2D Dungeon/scripts/Adventurer.gd<>res://2D Dungeon/scripts/Mouseover.gd
+MainScene.gd::GDScript::-1::1722471442::0::1::::<>Control<>::
+MainScene.tscn::PackedScene::6779351919533116445::1722471442::0::1::::<><>::res://2D Dungeon/scenes/MainScene.gd<>uid://dguqxlvl1nqgn::::res://2D Dungeon/assets/Stairs Tool.png<>uid://ctxku51vfptbh::::res://2D Dungeon/assets/Regular Polygon Tool.png<>uid://42e05b08oec4::::res://2D Dungeon/assets/Path Tool.png<>uid://cw10uqaiyl0nu::::res://2D Dungeon/assets/Rectangle Tool.png<>uid://n2a0yyodsle::::res://2D Dungeon/assets/Wall Tool.png<>uid://wpm5t6m35usp::::res://2D Dungeon/assets/Door Tool.png<>uid://bee6ke8218eq7::::res://2D Dungeon/assets/Polygon Tool.png<>uid://dlt6jxq42xj25::::res://2D Dungeon/assets/Sho-CardCapsNF.ttf<>uid://cdhatav0yjbhm::::res://2D Dungeon/assets/Home.png
+NewMainScene.tscn::PackedScene::4153616932169421777::1722471442::0::1::::<><>::uid://c3t762umcvydp::::res://2D Dungeon/scenes/MainScene.tscn<>uid://5ox6g2e5lsqk::::res://2D Dungeon/scenes/Dungeon.tscn
+Path.tscn::PackedScene::910704845457580232::1722471442::0::1::::<><>::res://2D Dungeon/scripts/Path.gd
+Polygon.tscn::PackedScene::7070045553693225827::1722471442::0::1::::<><>::res://2D Dungeon/scripts/Polygon.gd
+Rectangle.tscn::PackedScene::479437821820829629::1722471442::0::1::::<><>::res://2D Dungeon/scripts/Rectangle.gd
+Select.tscn::PackedScene::548873497569980570::1722471442::0::1::::<><>::res://2D Dungeon/scripts/Select.gd
+Stairs.tscn::PackedScene::9014071373338396156::1722471442::0::1::::<><>::res://2D Dungeon/scripts/Stairs.gd
+Wall.tscn::PackedScene::3777201514635750486::1722471442::0::1::::<><>::res://2D Dungeon/scripts/Wall.gd
+::res://2D Dungeon/scripts/::1722471442
+Adventurer.gd::GDScript::-1::1722471442::0::1::::Adventurer<>Node2D<>::
+Bridge.gd::GDScript::-1::1722471442::0::1::::<>Node2D<>::
+Corridor.gd::GDScript::-1::1722471442::0::1::::Corridor<>Line2D<>::
+Corridors.gd::GDScript::-1::1722471442::0::1::::Corridors<>Node2D<>::
+Door.gd::GDScript::-1::1722471442::0::1::::<>Node2D<>::
+Dungeon.gd::GDScript::-1::1722471442::0::1::::Dungeon<>Node2D<>::
+MainScene.gd::GDScript::-1::1722471442::0::1::::<>Control<>::
+Mouseover.gd::GDScript::-1::1722471442::0::1::::Mouseover<>Label<>::
+Path.gd::GDScript::-1::1722471442::0::1::::<>Node2D<>::
+Polygon.gd::GDScript::-1::1722471442::0::1::::<>Node2D<>::
+Rectangle.gd::GDScript::-1::1722471442::0::1::::<>Node2D<>::
+RoomGrid.gd::GDScript::-1::1722471442::0::1::::RoomGrid<>Node2D<>::
+Select.gd::GDScript::-1::1722471442::0::1::::<>Node2D<>::
+Stairs.gd::GDScript::-1::1722471442::0::1::::<>Node2D<>::
+TopoMap.gd::GDScript::-1::1722471442::0::1::::TopoMap<>Node2D<>::
+Wall.gd::GDScript::-1::1722471442::0::1::::<>Node2D<>::
+Zone.gd::GDScript::-1::1722471442::0::1::::Zone<>Node2D<>::
+Zones.gd::GDScript::-1::1722471442::0::1::::Zones<>Node2D<>::
+::res://3D Dungeon/::1722471442
+DunMesh.tres::MeshLibrary::6615114895654824645::1722471442::0::1::::<><>::
+dun_gen.gd::GDScript::-1::1722471442::0::1::::<>Node3D<>::
+dun_gen.tscn::PackedScene::86081427621730258::1722471442::0::1::::<><>::uid://c1in8gc35mlvp::::res://3D Dungeon/DunMesh.tres<>res://3D Dungeon/dun_gen.gd
+mesh.tscn::PackedScene::1334870031214202553::1722471442::0::1::::<><>::
+UI.tscn::PackedScene::2031606186568253086::1722471442::0::1::::<><>::
+::res://3D Dungeon/imports/::1722471442
+ceiling.tres::StandardMaterial3D::8155503231468143737::1722471442::0::1::::<><>::uid://cvewhq4x36jhm::::res://imports/DunCell_TexturesCom_Pavement_CobblestoneStreet5_2x2_1K_albedo.png<>uid://cmnikjkgv3d16::::res://imports/DunCell_TexturesCom_Pavement_CobblestoneStreet5_2x2_1K_normals.png
+DunCell.gd::GDScript::-1::1722471442::0::1::::<>Node3D<>::
+DunCell.glb::PackedScene::7937418948370697085::1722471442::1722475341::1::::<><>::uid://pypg3e77tne3::::res://3D Dungeon/imports/DunCell_TexturesCom_Cement_1x1_512_albedo.png<>uid://dkg7jbmwlbl8g::::res://3D Dungeon/imports/DunCell_TexturesCom_Cement_1x1_512_normals.png<>uid://huc052xwvnuq::::res://3D Dungeon/imports/DunCell_TexturesCom_MixedMedievalBricks_1K_albedo.png<>uid://pvcdfq7dtuvs::::res://3D Dungeon/imports/DunCell_TexturesCom_MixedMedievalBricks_1K_normals.png<>uid://cvewhq4x36jhm::::res://3D Dungeon/imports/DunCell_TexturesCom_Pavement_CobblestoneStreet5_2x2_1K_albedo.png<>uid://cmnikjkgv3d16::::res://3D Dungeon/imports/DunCell_TexturesCom_Pavement_CobblestoneStreet5_2x2_1K_normals.png
+DunCell.tscn::PackedScene::4851525450554089124::1722471442::0::1::::<><>::res://imports/DunCell.gd<>uid://dgw3ja14i3vne::::res://imports/floor.tres<>uid://cmx524f0yfom0::::res://imports/walls.tres<>uid://dogt7gmvynypt::::res://imports/ceiling.tres
+DunCell_TexturesCom_Cement_1x1_512_albedo.png::CompressedTexture2D::1103300668653326704::1722471442::1722475338::1::::<><>::
+DunCell_TexturesCom_Cement_1x1_512_normals.png::CompressedTexture2D::7875495841972991884::1722471442::1722475338::1::::<><>::
+DunCell_TexturesCom_MixedMedievalBricks_1K_albedo.png::CompressedTexture2D::532777157866056340::1722471442::1722475338::1::::<><>::
+DunCell_TexturesCom_MixedMedievalBricks_1K_normals.png::CompressedTexture2D::1096311667565323252::1722471442::1722475338::1::::<><>::
+DunCell_TexturesCom_Pavement_CobblestoneStreet5_2x2_1K_albedo.png::CompressedTexture2D::6256413755455909366::1722471442::1722475338::1::::<><>::
+DunCell_TexturesCom_Pavement_CobblestoneStreet5_2x2_1K_normals.png::CompressedTexture2D::5642448484186524431::1722471442::1722475338::1::::<><>::
+dun_cell.tscn::PackedScene::2686959895746768544::1722471442::0::1::::<><>::uid://dlc7eo0th32e0::::res://imports/DunCell.glb
+floor.tres::StandardMaterial3D::7627527612933775634::1722471442::0::1::::<><>::uid://pypg3e77tne3::::res://imports/DunCell_TexturesCom_Cement_1x1_512_albedo.png<>uid://dkg7jbmwlbl8g::::res://imports/DunCell_TexturesCom_Cement_1x1_512_normals.png
+walls.tres::StandardMaterial3D::5664459437673738737::1722471442::0::1::::<><>::uid://huc052xwvnuq::::res://imports/DunCell_TexturesCom_MixedMedievalBricks_1K_albedo.png<>uid://pvcdfq7dtuvs::::res://imports/DunCell_TexturesCom_MixedMedievalBricks_1K_normals.png
+::res://imports/::1722471443
+ceiling.tres::StandardMaterial3D::8155503231468143737::1722471443::0::1::::<><>::uid://cvewhq4x36jhm::::res://imports/DunCell_TexturesCom_Pavement_CobblestoneStreet5_2x2_1K_albedo.png<>uid://cmnikjkgv3d16::::res://imports/DunCell_TexturesCom_Pavement_CobblestoneStreet5_2x2_1K_normals.png
+DunCell.gd::GDScript::-1::1722471442::0::1::::<>Node3D<>::
+DunCell.glb::PackedScene::7937418948370697085::1722471443::1722475341::1::::<><>::uid://pypg3e77tne3::::res://imports/DunCell_TexturesCom_Cement_1x1_512_albedo.png<>uid://dkg7jbmwlbl8g::::res://imports/DunCell_TexturesCom_Cement_1x1_512_normals.png<>uid://huc052xwvnuq::::res://imports/DunCell_TexturesCom_MixedMedievalBricks_1K_albedo.png<>uid://pvcdfq7dtuvs::::res://imports/DunCell_TexturesCom_MixedMedievalBricks_1K_normals.png<>uid://cvewhq4x36jhm::::res://imports/DunCell_TexturesCom_Pavement_CobblestoneStreet5_2x2_1K_albedo.png<>uid://cmnikjkgv3d16::::res://imports/DunCell_TexturesCom_Pavement_CobblestoneStreet5_2x2_1K_normals.png
+DunCell.tscn::PackedScene::4851525450554089124::1722471443::0::1::::<><>::res://imports/DunCell.gd<>uid://dgw3ja14i3vne::::res://imports/floor.tres<>uid://cmx524f0yfom0::::res://imports/walls.tres<>uid://dogt7gmvynypt::::res://imports/ceiling.tres
+DunCell_TexturesCom_Cement_1x1_512_albedo.png::CompressedTexture2D::1103300668653326704::1722471443::1722475338::1::::<><>::
+DunCell_TexturesCom_Cement_1x1_512_normals.png::CompressedTexture2D::7875495841972991884::1722471443::1722475338::1::::<><>::
+DunCell_TexturesCom_MixedMedievalBricks_1K_albedo.png::CompressedTexture2D::532777157866056340::1722471443::1722475338::1::::<><>::
+DunCell_TexturesCom_MixedMedievalBricks_1K_normals.png::CompressedTexture2D::1096311667565323252::1722471443::1722475338::1::::<><>::
+DunCell_TexturesCom_Pavement_CobblestoneStreet5_2x2_1K_albedo.png::CompressedTexture2D::6256413755455909366::1722471443::1722475338::1::::<><>::
+DunCell_TexturesCom_Pavement_CobblestoneStreet5_2x2_1K_normals.png::CompressedTexture2D::5642448484186524431::1722471443::1722475338::1::::<><>::
+dun_cell.tscn::PackedScene::2686959895746768544::1722471443::0::1::::<><>::uid://dlc7eo0th32e0::::res://imports/DunCell.glb
+floor.tres::StandardMaterial3D::7627527612933775634::1722471443::0::1::::<><>::uid://pypg3e77tne3::::res://imports/DunCell_TexturesCom_Cement_1x1_512_albedo.png<>uid://dkg7jbmwlbl8g::::res://imports/DunCell_TexturesCom_Cement_1x1_512_normals.png
+walls.tres::StandardMaterial3D::5664459437673738737::1722471443::0::1::::<><>::uid://huc052xwvnuq::::res://imports/DunCell_TexturesCom_MixedMedievalBricks_1K_albedo.png<>uid://pvcdfq7dtuvs::::res://imports/DunCell_TexturesCom_MixedMedievalBricks_1K_normals.png
